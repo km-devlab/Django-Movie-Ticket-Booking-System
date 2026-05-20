@@ -1,0 +1,86 @@
+{% extends "users/basic.html" %}
+{% block title %}Select Seats — BookMySeat{% endblock %}
+
+{% block content %}
+<div class="container py-4 py-lg-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-8">
+      <div class="seat-page-header">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+          <div>
+            <h1 class="h4 mb-1">{{ theaters.movie.name }}</h1>
+            <p class="text-secondary mb-0">
+              <i class="fas fa-map-marker-alt me-1"></i> {{ theaters.name }}
+              <span class="mx-2">|</span>
+              <i class="far fa-clock me-1"></i> {{ theaters.time }}
+            </p>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="amenity-badge">2D</span>
+            <span class="amenity-badge">3D</span>
+            <span class="amenity-badge">IMAX</span>
+            <span class="amenity-badge"><i class="fas fa-chair me-1"></i>{{ seats|length }} seats</span>
+          </div>
+        </div>
+      </div>
+
+      {% if error %}
+      <div class="alert alert-cinema mb-4" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
+      </div>
+      {% endif %}
+
+      <div class="seat-panel">
+        <h2 class="h5 text-center mb-4">Select Your Seats</h2>
+
+        <div class="cinema-screen" aria-hidden="true"></div>
+        <p class="cinema-screen-label">All eyes this way please!</p>
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="seat-grid" role="group" aria-label="Seat selection">
+            {% for seat in seats %}
+            <div class="seat {% if seat.is_booked %}sold{% endif %}" {% if seat.is_booked %}aria-disabled="true"{% endif %}>
+              {% if not seat.is_booked %}
+              <input
+                type="checkbox"
+                name="seats"
+                value="{{ seat.id }}"
+                class="visually-hidden"
+                id="seat-{{ seat.id }}"
+                aria-label="Seat {{ seat.seat_number }}"
+              />
+              <label for="seat-{{ seat.id }}">{{ seat.seat_number }}</label>
+              {% else %}
+              <span>{{ seat.seat_number }}</span>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="seat-legend">
+            <div class="seat-legend-item">
+              <div class="seat" aria-hidden="true"></div>
+              <span>Available</span>
+            </div>
+            <div class="seat-legend-item">
+              <div class="seat selected" aria-hidden="true"></div>
+              <span>Selected</span>
+            </div>
+            <div class="seat-legend-item">
+              <div class="seat sold" aria-hidden="true"></div>
+              <span>Booked</span>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-cinema btn-cinema-lg">
+              <i class="fas fa-ticket-alt me-2"></i>Book Selected Seats
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

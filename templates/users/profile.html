@@ -1,0 +1,78 @@
+{% extends "users/basic.html" %}
+{% block title %}Profile — BookMySeat{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-lg-5">
+  <section class="row g-4">
+    <section class="col-lg-4">
+      <section class="profile-sidebar">
+        <span class="profile-avatar"><i class="fas fa-user"></i></span>
+        <h2 class="h4 mb-1">{{ user.username }}</h2>
+        <p class="text-secondary mb-4">{{ user.email }}</p>
+        <a href="{% url 'password_reset' %}" class="btn btn-cinema-outline w-100">
+          <i class="fas fa-key me-2"></i>Reset Password
+        </a>
+      </section>
+    </section>
+
+    <section class="col-lg-8">
+      <section class="panel-card">
+        <header class="panel-card-header">
+          <i class="fas fa-user-edit me-2"></i>Update Profile
+        </header>
+        <section class="panel-card-body auth-card">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in u_form %}
+            <section class="mb-3">
+              <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+              {{ field.errors }}
+              {{ field }}
+              {% if field.help_text %}
+              <small class="form-text">{{ field.help_text }}</small>
+              {% endif %}
+            </section>
+            {% endfor %}
+            <button class="btn btn-cinema w-100" type="submit">
+              <i class="fas fa-save me-2"></i>Update Profile
+            </button>
+          </form>
+        </section>
+      </section>
+
+      <section class="panel-card">
+        <header class="panel-card-header">
+          <i class="fas fa-ticket-alt me-2"></i>Your Bookings
+        </header>
+        <section class="panel-card-body">
+          {% if bookings %}
+          <section class="row g-3">
+            {% for booking in bookings %}
+            <section class="col-md-6">
+              <article class="booking-ticket">
+                <h3 class="h6 mb-2">{{ booking.movie.name }}</h3>
+                <p class="text-secondary small mb-1">
+                  <i class="fas fa-film me-2"></i>{{ booking.theater.name }}
+                </p>
+                <p class="text-secondary small mb-1">
+                  <i class="fas fa-chair me-2"></i>Seat {{ booking.seat.seat_number }}
+                </p>
+                <p class="text-secondary small mb-0">
+                  <i class="far fa-clock me-2"></i>{{ booking.booked_at|date:"F d, Y H:i" }}
+                </p>
+              </article>
+            </section>
+            {% endfor %}
+          </section>
+          {% else %}
+          <section class="empty-state py-4">
+            <i class="fas fa-ticket-alt d-block"></i>
+            <p class="mb-0">No bookings yet. Time to plan your next movie night!</p>
+          </section>
+          {% endif %}
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
+{% endblock %}

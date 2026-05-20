@@ -1,0 +1,47 @@
+{% extends "users/basic.html" %}
+{% block title %}Register — BookMySeat{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <section class="row justify-content-center">
+    <section class="col-md-8 col-lg-6">
+      <section class="auth-card">
+        <header class="auth-card-header">
+          <h1><i class="fas fa-user-plus me-2"></i>Create Account</h1>
+        </header>
+        <section class="auth-card-body">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+            <section class="mb-3">
+              <label for="{{ field.id_for_label }}" class="form-label">
+                {{ field.label }}
+                {% if field.field.required %}<span class="text-accent">*</span>{% endif %}
+              </label>
+              <section class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-{% if field.name == 'username' %}user{% elif field.name == 'email' %}envelope{% elif 'password' in field.name %}lock{% else %}info-circle{% endif %}"></i>
+                </span>
+                {{ field }}
+              </section>
+              {% if field.help_text %}
+              <small class="form-text">{{ field.help_text|safe }}</small>
+              {% endif %}
+              {% for error in field.errors %}
+              <p class="invalid-feedback d-block mb-0">{{ error }}</p>
+              {% endfor %}
+            </section>
+            {% endfor %}
+            <button type="submit" class="btn btn-cinema w-100 mt-2">
+              <i class="fas fa-user-plus me-2"></i>Register
+            </button>
+          </form>
+        </section>
+        <footer class="auth-card-footer">
+          <p class="mb-0">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+        </footer>
+      </section>
+    </section>
+  </section>
+</section>
+{% endblock %}
