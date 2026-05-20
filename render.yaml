@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: django-bookmyshow
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn bookmyseat.wsgi:application"
+    envVars:
+      - key: DEBUG
+        value: False
