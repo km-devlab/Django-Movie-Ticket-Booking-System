@@ -60,10 +60,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## Screenshots
-
-(Add screenshots here later)
-
 ## Future Improvements
 
 - Online payments
