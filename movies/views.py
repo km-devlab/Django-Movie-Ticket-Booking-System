@@ -49,6 +49,10 @@ def book_seats(request, theater_id):
         return redirect('profile')
     return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats})
 
+def home(request):
+    movies = Movie.objects.all()
+    return render(request, 'home.html', {'movies': movies})
+
 
 
 
