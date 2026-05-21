@@ -119,12 +119,12 @@
     ></script>
     <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
-    <script>
+    <!-- <script>
 document.querySelectorAll("img").forEach((img, index) => {
     if (img.src.includes("storage.googleapis.com")) {
         img.src = `https://picsum.photos/400/600?random=${index}`;
     }
 });
-</script>
+</script> -->
   </body>
 </html>
