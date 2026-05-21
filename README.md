@@ -68,6 +68,8 @@ python manage.py runserver
 - Admin dashboard improvements
 - Better animations/UI
 
+## Live Link Of the Project
+https://django-movie-ticket-booking-system-1.onrender.com
 <!-- ## Author
 
 Khrisha Mamallan -->
