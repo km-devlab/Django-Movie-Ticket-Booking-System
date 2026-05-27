@@ -8,6 +8,42 @@ class Movie(models.Model):
     rating = models.DecimalField(max_digits=3,decimal_places=1)
     cast= models.TextField()
     description= models.TextField(blank=True,null=True) # optional
+    genres = models.ManyToManyField("Genre", related_name="movies", blank=True)
+    languages = models.ManyToManyField("Language", related_name="movies", blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["name"], name="movie_name_idx"),
+            models.Index(fields=["rating", "name"], name="movie_rating_name_idx"),
+        ]
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=80, unique=True)
+    slug = models.SlugField(max_length=90, unique=True, db_index=True)
+
+    class Meta:
+        ordering = ["name"]
+        indexes = [
+            models.Index(fields=["slug"], name="genre_slug_idx"),
+        ]
+
+    def __str__(self):
+        return self.name
+
+
+class Language(models.Model):
+    name = models.CharField(max_length=80, unique=True)
+    slug = models.SlugField(max_length=90, unique=True, db_index=True)
+
+    class Meta:
+        ordering = ["name"]
+        indexes = [
+            models.Index(fields=["slug"], name="language_slug_idx"),
+        ]
 
     def __str__(self):
         return self.name

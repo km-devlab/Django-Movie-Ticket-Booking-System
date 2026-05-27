@@ -6,20 +6,79 @@
   <h1 class="page-title text-center">Now Showing</h1>
   <p class="page-subtitle text-center">Search and book your next cinematic experience</p>
 
-  <form method="get" action="{% url 'movie_list' %}" class="search-cinema d-flex align-items-center gap-2">
+  <form method="get" action="{% url 'movie_list' %}" class="movie-filter-panel">
     <input
       class="form-control flex-grow-1"
       name="search"
       type="search"
       placeholder="Search movies, cast, events..."
-      value="{{ request.GET.search|default_if_none:'' }}"
+      value="{{ search_query }}"
       aria-label="Search movies"
       data-movie-search
     />
-    <button class="btn btn-cinema flex-shrink-0" type="submit">
-      <i class="fas fa-search me-1"></i> Search
-    </button>
+    {% if genres or languages %}
+    <div class="filter-toolbar">
+      {% if genres %}
+      <div class="filter-group">
+        <span class="filter-label">Genre</span>
+        <div class="filter-options">
+          {% for genre in genres %}
+          <label class="filter-chip{% if genre.slug in selected_genres %} is-active{% endif %}">
+            <input
+              type="checkbox"
+              name="genre"
+              value="{{ genre.slug }}"
+              {% if genre.slug in selected_genres %}checked{% endif %}
+              {% if genre.movie_count == 0 and genre.slug not in selected_genres %}disabled{% endif %}
+            />
+            <span>{{ genre.name }}</span>
+            <small>{{ genre.movie_count }}</small>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% if languages %}
+      <div class="filter-group">
+        <span class="filter-label">Language</span>
+        <div class="filter-options">
+          {% for language in languages %}
+          <label class="filter-chip{% if language.slug in selected_languages %} is-active{% endif %}">
+            <input
+              type="checkbox"
+              name="language"
+              value="{{ language.slug }}"
+              {% if language.slug in selected_languages %}checked{% endif %}
+              {% if language.movie_count == 0 and language.slug not in selected_languages %}disabled{% endif %}
+            />
+            <span>{{ language.name }}</span>
+            <small>{{ language.movie_count }}</small>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="filter-actions">
+      <select class="form-select movie-sort-select" name="sort" aria-label="Sort movies">
+        {% for option in sort_options %}
+        <option value="{{ option.key }}" {% if option.key == sort_key %}selected{% endif %}>{{ option.label }}</option>
+        {% endfor %}
+      </select>
+      <button class="btn btn-cinema flex-shrink-0" type="submit">
+        <i class="fas fa-filter me-1"></i> Apply
+      </button>
+      <a class="btn btn-cinema-outline flex-shrink-0" href="{% url 'movie_list' %}">
+        Clear
+      </a>
+    </div>
   </form>
+
+  <div class="movie-results-bar">
+    <span>{{ total_movies }} movie{{ total_movies|pluralize }} found</span>
+    <span>Sorted by {{ sort_label }}</span>
+  </div>
 
   <div class="row g-4" id="movieList">
     {% for movie in movies %}
@@ -31,6 +90,14 @@
         </div>
         <div class="movie-card-body">
           <h2 class="movie-card-title">{{ movie.name }}</h2>
+          <p class="movie-card-meta mb-2">
+            <i class="fas fa-tags me-1 text-muted"></i>
+            {% for genre in movie.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% empty %}Genre unavailable{% endfor %}
+          </p>
+          <p class="movie-card-meta mb-2">
+            <i class="fas fa-language me-1 text-muted"></i>
+            {% for language in movie.languages.all %}{{ language.name }}{% if not forloop.last %}, {% endif %}{% empty %}Language unavailable{% endfor %}
+          </p>
           <p class="movie-card-meta mb-2">
             <i class="fas fa-users me-1 text-muted"></i> {{ movie.cast|truncatewords:12 }}
           </p>
@@ -45,9 +112,31 @@
     {% empty %}
     <div class="col-12 empty-state">
       <i class="fas fa-search d-block"></i>
-      <p class="lead mb-0">No movies found. Try a different search term.</p>
+      <p class="lead mb-0">No movies found. Try a different filter combination.</p>
     </div>
     {% endfor %}
   </div>
+
+  {% if page_obj.has_other_pages %}
+  <nav class="movie-pagination" aria-label="Movie pages">
+    {% if page_obj.has_previous %}
+    <a href="?{{ page_query }}{% if page_query %}&{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Previous page">
+      <i class="fas fa-chevron-left"></i>
+    </a>
+    {% endif %}
+    {% for page_number in paginator.page_range %}
+    {% if page_number == page_obj.number %}
+    <span class="is-current">{{ page_number }}</span>
+    {% elif page_number >= page_obj.number|add:"-2" and page_number <= page_obj.number|add:"2" %}
+    <a href="?{{ page_query }}{% if page_query %}&{% endif %}page={{ page_number }}">{{ page_number }}</a>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <a href="?{{ page_query }}{% if page_query %}&{% endif %}page={{ page_obj.next_page_number }}" aria-label="Next page">
+      <i class="fas fa-chevron-right"></i>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
 </div>
 {% endblock %}
