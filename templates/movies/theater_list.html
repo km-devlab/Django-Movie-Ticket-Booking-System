@@ -10,13 +10,36 @@
     </ol>
   </nav>
 
-  <h1 class="page-title">{{ movie.name }}</h1>
-  <p class="page-subtitle">Select a theater and showtime to continue booking</p>
+  <section class="movie-detail-hero">
+    <div class="movie-detail-poster">
+      <img src="{{ movie.image.url }}" alt="{{ movie.name }}" />
+    </div>
+    <div>
+      <span class="hero-kicker">Choose your show</span>
+      <h1 class="page-title">{{ movie.name }}</h1>
+      <div class="movie-detail-meta">
+        <span><i class="fas fa-star text-gold me-1"></i>{{ movie.rating }}</span>
+        {% for genre in movie.genres.all|slice:":3" %}
+        <span>{{ genre.name }}</span>
+        {% endfor %}
+        {% for language in movie.languages.all|slice:":2" %}
+        <span>{{ language.name }}</span>
+        {% endfor %}
+      </div>
+      <p class="page-subtitle mb-0">{{ movie.description|default:"Select a theater and showtime to continue booking."|truncatewords:28 }}</p>
+    </div>
+  </section>
 
   {% if theaters %}
     {% for theater in theaters %}
     <div class="theater-card">
-      <h2 class="theater-name">{{ theater.name }} Theater</h2>
+      <div class="theater-card-head">
+        <div>
+          <h2 class="theater-name">{{ theater.name }} Theater</h2>
+          <p class="text-secondary mb-0"><i class="fas fa-location-dot me-1"></i> Nearby cinema partner</p>
+        </div>
+        <span class="status-pill"><i class="fas fa-bolt me-1"></i> Filling fast</span>
+      </div>
       <div class="theater-amenities">
         <span class="amenity-badge"><i class="fas fa-mobile-alt me-1"></i> M-Ticket</span>
         <span class="amenity-badge"><i class="fas fa-utensils me-1"></i> Food & Beverage</span>

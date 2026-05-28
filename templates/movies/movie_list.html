@@ -3,19 +3,25 @@
 
 {% block content %}
 <div class="container py-4 py-lg-5">
-  <h1 class="page-title text-center">Now Showing</h1>
-  <p class="page-subtitle text-center">Search and book your next cinematic experience</p>
+  <section class="page-hero compact-page-hero">
+    <span class="hero-kicker">Movie catalog</span>
+    <h1 class="page-title">Now Showing</h1>
+    <p class="page-subtitle">Search by cast, narrow by genre or language, and lock in the right showtime.</p>
+  </section>
 
   <form method="get" action="{% url 'movie_list' %}" class="movie-filter-panel">
-    <input
-      class="form-control flex-grow-1"
-      name="search"
-      type="search"
-      placeholder="Search movies, cast, events..."
-      value="{{ search_query }}"
-      aria-label="Search movies"
-      data-movie-search
-    />
+    <div class="search-field">
+      <i class="fas fa-search"></i>
+      <input
+        class="form-control flex-grow-1"
+        name="search"
+        type="search"
+        placeholder="Search movies, cast, events..."
+        value="{{ search_query }}"
+        aria-label="Search movies"
+        data-movie-search
+      />
+    </div>
     {% if genres or languages %}
     <div class="filter-toolbar">
       {% if genres %}
@@ -104,7 +110,7 @@
         </div>
         <div class="movie-card-footer">
           <a href="{% url 'theater_list' movie.id %}" class="btn btn-cinema-outline w-100">
-            View Theaters <i class="fas fa-chevron-right ms-2"></i>
+            View Theaters <i class="fas fa-arrow-right ms-2"></i>
           </a>
         </div>
       </article>

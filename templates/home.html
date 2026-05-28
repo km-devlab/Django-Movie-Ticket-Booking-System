@@ -1,37 +1,62 @@
 {% extends "users/basic.html" %}
-{% block title %}Home — BookMySeat{% endblock %}
+{% block title %}Home - BookMySeat{% endblock %}
 
 {% block content %}
-<div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="/media/movies/rrr_1240x300.jpg" class="d-block w-100" alt="Featured promotion" />
-      <div class="carousel-caption d-none d-md-block">
-        <h2>Live the cinematic experience</h2>
-        <p>Book tickets for the hottest shows in town.</p>
+<section class="home-hero">
+  <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/media/movies/rrr_1240x300.jpg" class="d-block w-100" alt="RRR movie banner" />
+        <div class="carousel-caption">
+          <span class="hero-kicker">Now booking</span>
+          <h1>Big screen moments, picked in seconds.</h1>
+          <p>Explore handpicked movies, choose a nearby theater, and reserve your favorite seats without the queue.</p>
+          <div class="hero-actions">
+            <a href="/movies/" class="btn btn-cinema btn-cinema-lg">Browse Movies</a>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-cinema-outline btn-cinema-lg">Join Free</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/media/movies/interstellar_1240x300.jpg" class="d-block w-100" alt="Interstellar movie banner" />
+        <div class="carousel-caption">
+          <span class="hero-kicker">Premium picks</span>
+          <h1>Find the show that fits tonight.</h1>
+          <p>Filter by genre, language, and rating to get from mood to movie faster.</p>
+          <div class="hero-actions">
+            <a href="/movies/" class="btn btn-cinema btn-cinema-lg">See Top Rated</a>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/media/movies/project-hail-mary-poster-cropped-banner_1_1240x300.jpg" class="d-block w-100" alt="Project Hail Mary movie banner" />
+        <div class="carousel-caption">
+          <span class="hero-kicker">Fresh releases</span>
+          <h1>Seats, snacks, showtime. Sorted.</h1>
+          <p>Book with a clean seat map and keep every ticket in your profile.</p>
+          <div class="hero-actions">
+            <a href="/movies/" class="btn btn-cinema btn-cinema-lg">Start Booking</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="carousel-item">
-      <img src="/media/movies/interstellar_1240x300.jpg" class="d-block w-100" alt="Events promotion" />
-    </div>
-    <div class="carousel-item">
-      <img src="/media/movies/project-hail-mary-poster-cropped-banner_1_1240x300.jpg" class="d-block w-100" alt="Premiere promotion" />
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+</section>
 
 <div class="container py-4 py-lg-5">
   {% if not user.is_authenticated %}
@@ -42,7 +67,13 @@
   </div>
   {% endif %}
 
-  <h2 class="section-heading">Recommended Movies</h2>
+  <div class="section-header">
+    <div>
+      <span class="section-kicker">Curated for you</span>
+      <h2 class="section-heading">Recommended Movies</h2>
+    </div>
+    <a href="/movies/" class="section-link">View all <i class="fas fa-arrow-right ms-1"></i></a>
+  </div>
   <div class="row g-4 mb-5">
     {% if movies %}
       {% for movie in movies|slice:":4" %}
@@ -55,6 +86,13 @@
             </div>
             <div class="movie-card-body">
               <h3 class="movie-card-title">{{ movie.name }}</h3>
+              <div class="movie-card-tags">
+                {% for genre in movie.genres.all|slice:":2" %}
+                <span>{{ genre.name }}</span>
+                {% empty %}
+                <span>Movie</span>
+                {% endfor %}
+              </div>
               <p class="movie-card-meta">{{ movie.description|default:movie.cast|truncatewords:18 }}</p>
             </div>
           </article>
@@ -73,70 +111,80 @@
     <a href="/movies/" class="btn btn-cinema btn-cinema-lg">Browse All Movies</a>
   </div>
 
-  <h2 class="section-heading">Live Events</h2>
+  <div class="section-header">
+    <div>
+      <span class="section-kicker">Beyond movies</span>
+      <h2 class="section-heading">Live Events</h2>
+    </div>
+  </div>
   <div class="row g-3 mb-5">
     <div class="col-6 col-md-4 col-lg-2">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/wQXDIlqv4XoxGtNEO9XkSKBZYe9IuDePUWEcd0WwqcNzY5nTA.jpg" alt="Event 1" />
-        <div class="card-body"><h3 class="card-title">Event 1</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/wQXDIlqv4XoxGtNEO9XkSKBZYe9IuDePUWEcd0WwqcNzY5nTA.jpg" alt="Spotlight Live event" />
+        <div class="card-body"><span class="event-label">Concert</span><h3 class="card-title">Spotlight Live</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-4 col-lg-2">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/t52p8goZiO6QDBfid8wRyReanID18f5AxbszVhfPgESGklfcC.jpg" alt="Event 2" />
-        <div class="card-body"><h3 class="card-title">Event 2</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/t52p8goZiO6QDBfid8wRyReanID18f5AxbszVhfPgESGklfcC.jpg" alt="Laugh Riot event" />
+        <div class="card-body"><span class="event-label">Comedy</span><h3 class="card-title">Laugh Riot</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-4 col-lg-2">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/lAqCOht0TCaeSSLzw2ZGlPmDwvIEI3RtqajPoTYQN0ZOs8zJA.jpg" alt="Event 3" />
-        <div class="card-body"><h3 class="card-title">Event 3</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/lAqCOht0TCaeSSLzw2ZGlPmDwvIEI3RtqajPoTYQN0ZOs8zJA.jpg" alt="Stage Night event" />
+        <div class="card-body"><span class="event-label">Theatre</span><h3 class="card-title">Stage Night</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-4 col-lg-2">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/EyIkuIxpLaLyHBDEuu5hezeydhw0mOSjKWX71bUiuTBiY5nTA.jpg" alt="Event 4" />
-        <div class="card-body"><h3 class="card-title">Event 4</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/EyIkuIxpLaLyHBDEuu5hezeydhw0mOSjKWX71bUiuTBiY5nTA.jpg" alt="Indie Mix event" />
+        <div class="card-body"><span class="event-label">Music</span><h3 class="card-title">Indie Mix</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-4 col-lg-2">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/3QTKm2zD4e1OR6tqfvQrePQ9gJF0K8ecA4loyO4cJShYilfcC.jpg" alt="Event 5" />
-        <div class="card-body"><h3 class="card-title">Event 5</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/3QTKm2zD4e1OR6tqfvQrePQ9gJF0K8ecA4loyO4cJShYilfcC.jpg" alt="Arena Rush event" />
+        <div class="card-body"><span class="event-label">Sports</span><h3 class="card-title">Arena Rush</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-4 col-lg-2">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/g1fZzG6zyC1oe0HCfeQyRcjQ76fODp2HfaewYUqYpex1ZY5nTA.jpg" alt="Event 6" />
-        <div class="card-body"><h3 class="card-title">Event 6</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/g1fZzG6zyC1oe0HCfeQyRcjQ76fODp2HfaewYUqYpex1ZY5nTA.jpg" alt="Creator Hub event" />
+        <div class="card-body"><span class="event-label">Workshop</span><h3 class="card-title">Creator Hub</h3></div>
       </div>
     </div>
   </div>
 
-  <h2 class="section-heading">Premiere</h2>
+  <div class="section-header">
+    <div>
+      <span class="section-kicker">First look</span>
+      <h2 class="section-heading">Premiere</h2>
+    </div>
+  </div>
   <div class="row g-4">
     <div class="col-6 col-md-3">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/FJ64xM1AcD6FHJgA4oa0cGJSW3VudRGcPJEJxZG7eUNjs8zJA.jpg" alt="Premiere 1" />
-        <div class="card-body"><h3 class="card-title">Premiere 1</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/FJ64xM1AcD6FHJgA4oa0cGJSW3VudRGcPJEJxZG7eUNjs8zJA.jpg" alt="Festival Favorite premiere" />
+        <div class="card-body"><span class="event-label">Exclusive</span><h3 class="card-title">Festival Favorite</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-3">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/2u07aGlpRdZ2P57Q7MmUcimgjPcxfzjp0iwmTHsAFxGYs8zJA.jpg" alt="Premiere 2" />
-        <div class="card-body"><h3 class="card-title">Premiere 2</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/2u07aGlpRdZ2P57Q7MmUcimgjPcxfzjp0iwmTHsAFxGYs8zJA.jpg" alt="Weekend Debut premiere" />
+        <div class="card-body"><span class="event-label">New</span><h3 class="card-title">Weekend Debut</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-3">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/Eej0GoGFir1bLKOhfwpnUtyhbKe9I1OJUvnBVe1IObpPilfcC.jpg" alt="Premiere 3" />
-        <div class="card-body"><h3 class="card-title">Premiere 3</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/Eej0GoGFir1bLKOhfwpnUtyhbKe9I1OJUvnBVe1IObpPilfcC.jpg" alt="Director's Pick premiere" />
+        <div class="card-body"><span class="event-label">Limited</span><h3 class="card-title">Director's Pick</h3></div>
       </div>
     </div>
     <div class="col-6 col-md-3">
       <div class="event-card">
-        <img src="https://storage.googleapis.com/a1aa/image/HKg2EfFn2vXCFShRqFsKrlmxZk7Oy6jr4fqQ4utln0eiyyPnA.jpg" alt="Premiere 4" />
-        <div class="card-body"><h3 class="card-title">Premiere 4</h3></div>
+        <img src="https://storage.googleapis.com/a1aa/image/HKg2EfFn2vXCFShRqFsKrlmxZk7Oy6jr4fqQ4utln0eiyyPnA.jpg" alt="Midnight Show premiere" />
+        <div class="card-body"><span class="event-label">Special</span><h3 class="card-title">Midnight Show</h3></div>
       </div>
     </div>
   </div>
