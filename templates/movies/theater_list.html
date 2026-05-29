@@ -30,6 +30,33 @@
     </div>
   </section>
 
+  <section class="trailer-section" aria-labelledby="trailer-title">
+    <div class="section-header trailer-section-header">
+      <div>
+        <span class="section-kicker">Official trailer</span>
+        <h2 class="section-heading" id="trailer-title">{{ movie.name }} Trailer</h2>
+      </div>
+    </div>
+
+    {% if movie.youtube_embed_url %}
+    <div class="trailer-frame">
+      <iframe
+        src="{{ movie.youtube_embed_url }}"
+        title="{{ movie.name }} official trailer"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+    {% else %}
+    <div class="trailer-fallback">
+      <i class="fas fa-video-slash" aria-hidden="true"></i>
+      <p class="mb-0">Trailer is unavailable right now. You can still choose a theater and book tickets below.</p>
+    </div>
+    {% endif %}
+  </section>
+
   {% if theaters %}
     {% for theater in theaters %}
     <div class="theater-card">

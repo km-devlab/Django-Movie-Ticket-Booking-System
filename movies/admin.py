@@ -3,9 +3,9 @@ from .models import Movie, Theater, Seat,Booking, Genre, Language
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ['name', 'rating', 'cast','description']
+    list_display = ['name', 'rating', 'cast','description', 'trailer_url']
     list_filter = ['genres', 'languages']
-    search_fields = ['name', 'cast']
+    search_fields = ['name', 'cast', 'trailer_url']
     filter_horizontal = ['genres', 'languages']
 
 @admin.register(Genre)

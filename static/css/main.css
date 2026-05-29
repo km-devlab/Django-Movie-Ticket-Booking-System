@@ -1127,6 +1127,49 @@ main.site-main {
   padding: 0.3rem 0.66rem;
 }
 
+.trailer-section {
+  margin-bottom: 1.5rem;
+}
+
+.trailer-section-header {
+  margin: 0 0 1rem;
+}
+
+.trailer-frame {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  width: 100%;
+}
+
+.trailer-frame iframe {
+  border: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.trailer-fallback {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.045), transparent 48%),
+    var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  display: flex;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+}
+
+.trailer-fallback i {
+  color: var(--accent-cyan);
+  font-size: 1.25rem;
+}
+
 /* —— Breadcrumb —— */
 .breadcrumb {
   background: transparent;

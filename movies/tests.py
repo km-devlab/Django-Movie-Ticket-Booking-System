@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
@@ -77,3 +78,36 @@ class MovieFilteringTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["total_movies"], 14)
         self.assertEqual(len(response.context["movies"]), 2)
+
+
+@override_settings(STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage")
+class MovieTrailerTests(TestCase):
+    def test_rejects_non_youtube_trailer_url(self):
+        movie = Movie(
+            name="Unsafe Trailer",
+            image="movies/test.jpg",
+            rating=7.0,
+            cast="Test cast",
+            description="Test movie",
+            trailer_url="https://evil.example.com/watch?v=zSWdZVtXT7E",
+        )
+
+        with self.assertRaises(ValidationError):
+            movie.full_clean()
+
+    def test_movie_detail_uses_sanitized_lazy_youtube_embed(self):
+        movie = Movie.objects.create(
+            name="Safe Trailer",
+            image="movies/test.jpg",
+            rating=8.0,
+            cast="Test cast",
+            description="Test movie",
+            trailer_url="https://www.youtube.com/watch?v=zSWdZVtXT7E&bad=<script>",
+        )
+
+        response = self.client.get(reverse("theater_list", args=[movie.id]))
+
+        self.assertContains(response, "https://www.youtube-nocookie.com/embed/zSWdZVtXT7E")
+        self.assertContains(response, 'loading="lazy"')
+        self.assertNotContains(response, "bad=")
+        self.assertNotContains(response, "&lt;script&gt;")

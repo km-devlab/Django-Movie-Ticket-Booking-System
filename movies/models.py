@@ -1,5 +1,45 @@
-from django.db import models
+from urllib.parse import parse_qs, urlparse
+
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User 
+from django.db import models
+
+
+YOUTUBE_HOSTS = {
+    "youtube.com",
+    "www.youtube.com",
+    "m.youtube.com",
+    "youtu.be",
+    "www.youtu.be",
+}
+
+
+def extract_youtube_video_id(url):
+    parsed_url = urlparse(url.strip())
+    host = parsed_url.netloc.lower()
+
+    if host not in YOUTUBE_HOSTS:
+        return None
+
+    if host in {"youtu.be", "www.youtu.be"}:
+        video_id = parsed_url.path.strip("/").split("/")[0]
+    elif parsed_url.path == "/watch":
+        video_id = parse_qs(parsed_url.query).get("v", [""])[0]
+    elif parsed_url.path.startswith("/embed/"):
+        video_id = parsed_url.path.split("/embed/", 1)[1].split("/")[0]
+    elif parsed_url.path.startswith("/shorts/"):
+        video_id = parsed_url.path.split("/shorts/", 1)[1].split("/")[0]
+    else:
+        return None
+
+    if len(video_id) == 11 and all(char.isalnum() or char in "_-" for char in video_id):
+        return video_id
+    return None
+
+
+def validate_youtube_trailer_url(url):
+    if url and not extract_youtube_video_id(url):
+        raise ValidationError("Enter a valid YouTube trailer URL.")
 
 
 class Movie(models.Model):
@@ -8,11 +48,19 @@ class Movie(models.Model):
     rating = models.DecimalField(max_digits=3,decimal_places=1)
     cast= models.TextField()
     description= models.TextField(blank=True,null=True) # optional
+    trailer_url = models.URLField(blank=True, validators=[validate_youtube_trailer_url])
     genres = models.ManyToManyField("Genre", related_name="movies", blank=True)
     languages = models.ManyToManyField("Language", related_name="movies", blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def youtube_embed_url(self):
+        video_id = extract_youtube_video_id(self.trailer_url or "")
+        if not video_id:
+            return ""
+        return f"https://www.youtube-nocookie.com/embed/{video_id}"
 
     class Meta:
         indexes = [

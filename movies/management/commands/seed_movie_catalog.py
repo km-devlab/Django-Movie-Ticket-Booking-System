@@ -47,6 +47,17 @@ REAL_MOVIES = [
 GENRES = sorted({genre for movie in REAL_MOVIES for genre in movie[3]} | {"Crime", "War"})
 LANGUAGES = sorted({language for movie in REAL_MOVIES for language in movie[4]} | {"Hindi", "Tamil", "Telugu"})
 
+TRAILER_URLS = {
+    "Avatar: The Way of Water": "https://www.youtube.com/watch?v=d9MyW72ELq0",
+    "Avengers: Endgame": "https://www.youtube.com/watch?v=TcMBFSGVi1c",
+    "Black Panther": "https://www.youtube.com/watch?v=xjDjIWPwcPU",
+    "Coco": "https://www.youtube.com/watch?v=Ga6RYejo6Hk",
+    "Interstellar": "https://www.youtube.com/watch?v=zSWdZVtXT7E",
+    "Spider-Man: Into the Spider-Verse": "https://www.youtube.com/watch?v=g4Hbz2jLxvQ",
+    "The Dark Knight": "https://www.youtube.com/watch?v=EXeTwQWrcwY",
+    "The Lion King": "https://www.youtube.com/watch?v=7TavVZMewpY",
+}
+
 
 class Command(BaseCommand):
     help = "Seed a realistic movie catalog and optionally add unique synthetic rows for scale testing."
@@ -97,6 +108,7 @@ class Command(BaseCommand):
                     "rating": Decimal(rating),
                     "cast": cast,
                     "description": description,
+                    "trailer_url": TRAILER_URLS.get(title, ""),
                 },
             )
             movie.genres.set(Genre.objects.filter(name__in=genres))
