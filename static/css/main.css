@@ -769,23 +769,59 @@ main.site-main {
 .cinema-screen {
   margin: 0 auto 2rem;
   max-width: 85%;
-  height: 8px;
-  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-  border-radius: 4px;
-  box-shadow: 0 0 40px rgba(245, 197, 24, 0.35);
+  height: 10px;
+  border-radius: 999px;
   position: relative;
+
+  background: linear-gradient(
+    90deg,
+    #00f5ff,
+    #7d3cff,
+    #ff3cac,
+    #00f5ff
+  );
+
+  background-size: 300% 100%;
+
+  animation: screenGlow 6s linear infinite;
+
+  box-shadow:
+    0 0 15px rgba(0, 245, 255, 0.5),
+    0 0 30px rgba(125, 60, 255, 0.4),
+    0 0 50px rgba(255, 60, 172, 0.3);
 }
 
 .cinema-screen::before {
-  background: linear-gradient(180deg, rgba(245, 197, 24, 0.18), transparent);
-  border-radius: 50%;
   content: '';
-  height: 70px;
-  left: 50%;
   position: absolute;
+  left: 50%;
   top: 10px;
   transform: translateX(-50%);
-  width: min(560px, 86vw);
+
+  width: min(700px, 95vw);
+  height: 140px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 245, 255, 0.18) 0%,
+    rgba(125, 60, 255, 0.12) 35%,
+    rgba(255, 60, 172, 0.08) 60%,
+    transparent 100%
+  );
+
+  filter: blur(10px);
+  pointer-events: none;
+}
+@keyframes screenGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 300% 50%;
+  }
 }
 
 .cinema-screen-label {
