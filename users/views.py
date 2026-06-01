@@ -4,6 +4,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from movies.models import Movie , Booking
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 def home(request):
     movies= Movie.objects.all()
@@ -33,19 +35,26 @@ def login_view(request):
         form=AuthenticationForm()
     return render(request,'users/login.html',{'form':form})
 
-@login_required
+@login_required(login_url='/login/')
 def profile(request):
-    bookings= Booking.objects.filter(user=request.user)
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         if u_form.is_valid():
             u_form.save()
+            messages.success(request, "Your profile has been successfully updated!")
             return redirect('profile')
     else:
+        # Pre-fills the input boxes with your current logged-in data
         u_form = UserUpdateForm(instance=request.user)
 
-    return render(request, 'users/profile.html', {'u_form': u_form,'bookings':bookings})
+    # Grabs all your past tickets to display inside the bottom panel card
+    bookings = Booking.objects.filter(user=request.user).order_by('-booked_at')
 
+    context = {
+        'u_form': u_form,
+        'bookings': bookings
+    }
+    return render(request, 'users/profile.html', context)
 @login_required
 def reset_password(request):
     if request.method == 'POST':
