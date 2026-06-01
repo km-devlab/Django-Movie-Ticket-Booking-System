@@ -186,3 +186,7 @@ LOGGING = {
     },
 }
 
+# Force Celery tasks to run instantly in the main thread (No worker needed)
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_EAGER_PROPAGATES = True
+
