@@ -13,6 +13,14 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+from django.urls import path
+from movies.views import emergency_database_reset  # <-- Add this import
+
+urlpatterns = [
+    # ... your existing paths ...
+    path('secret-db-reset/', emergency_database_reset, name='db_reset'), # <-- Add this line
+]
+
 # attempt 1
 # from django.contrib import admin
 # from django.urls import path, include

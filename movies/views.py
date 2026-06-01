@@ -1,3 +1,5 @@
+# Import the function at the top of views.py
+from movies.services import send_booking_confirmation_email
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from django.shortcuts import render, redirect ,get_object_or_404
@@ -118,30 +120,66 @@ def book_seats(request, theater_id):
         error_seats = []
         if not selected_seats:
             return render(request, "movies/seat_selection.html", {'theater': theater, "seats": seats, 'error': "No seat selected"})
+        
+        new_booking_ids = []
+        booked_seat_names = []  # To collect names for the email template
+        
         for seat_id in selected_seats:
             seat = get_object_or_404(Seat, id=seat_id, theater=theater)
             if seat.is_booked:
                 error_seats.append(seat.seat_number)
                 continue
             try:
-                Booking.objects.create(
+                booking = Booking.objects.create(
                     user=request.user,
                     seat=seat,
                     movie=theater.movie,
                     theater=theater
                 )
+                new_booking_ids.append(booking.id)
+                booked_seat_names.append(seat.seat_number)  # Add seat number (e.g., "A1")
                 seat.is_booked = True
                 seat.save()
             except IntegrityError:
                 error_seats.append(seat.seat_number)
+                
         if error_seats:
             error_message = f"The following seats are already booked: {', '.join(error_seats)}"
             return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats, 'error': error_message})
+        
+        # --- NEW DYNAMIC EMAIL TRIGGER ---
+        if new_booking_ids:
+            # 1. Prepare dynamic layout data from the booking session
+            email_context = {
+                'show_title': theater.movie.name,
+                'show_timing': getattr(theater, 'timing', 'Check dashboard for timing'), # Fallback if timing field name differs
+                'seat_numbers': ", ".join(booked_seat_names),
+                'theater_info': f"{theater.name}, {theater.location if hasattr(theater, 'location') else ''}",
+                'payment_id': f"BKS-{new_booking_ids[0]}" # Fallback tracking ID using the primary booking reference
+            }
+            
+            # 2. Fire the service function directly
+            send_booking_confirmation_email(request.user.email, email_context)
+            
         return redirect('profile')
     return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats})
+
 
 def home(request):
     movies = Movie.objects.all()
     return render(request, 'home.html', {'movies': movies})
 
+from django.http import HttpResponse
+from django.contrib.auth.decorators import user_passes_test
+from .models import Seat, Booking
+
+@user_passes_test(lambda u: u.is_superuser)  # Only lets you run this if you are logged in as admin
+def emergency_database_reset(request):
+    try:
+        # Delete all bookings and unlock all seats
+        Booking.objects.all().delete()
+        Seat.objects.all().update(is_booked=False)
+        return HttpResponse("🚀 [SUCCESS] Live database fully reset to original state!")
+    except Exception as e:
+        return HttpResponse(f"❌ [ERROR] Reset failed: {str(e)}", status=500)
 
