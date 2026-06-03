@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import ssl
+from smtplib import SMTP
 import dj_database_url
 from dotenv import load_dotenv
 
@@ -20,6 +22,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load the .env file from the root directory
 load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+
+def env_bool(name, default=False):
+    return os.environ.get(name, str(default)).strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+_old_starttls = SMTP.starttls
+
+
+def _starttls_without_deprecated_keyfile(self, keyfile=None, certfile=None, context=None):
+    if context is None:
+        context = ssl.create_default_context()
+    return _old_starttls(self, context=context)
+
+
+SMTP.starttls = _starttls_without_deprecated_keyfile
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -63,16 +81,11 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL='auth.User'
 
-# Secure Email Configuration managed securely via Environment Variables
-# Secure Email Configuration managed securely via Environment Variables
 EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-
-# FIX FOR DJANGO 3.2 + PYTHON 3.12+ COMPATIBILITY
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
+EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
+EMAIL_USE_SSL = env_bool('EMAIL_USE_SSL', False)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'BookMySeat <noreply@bookmyseat.com>')
@@ -189,4 +202,3 @@ LOGGING = {
 # Force Celery tasks to run instantly in the main thread (No worker needed)
 # CELERY_TASK_ALWAYS_EAGER = True
 # CELERY_TASK_EAGER_PROPAGATES = True
-

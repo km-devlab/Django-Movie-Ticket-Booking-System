@@ -111,3 +111,143 @@ class MovieTrailerTests(TestCase):
         self.assertContains(response, 'loading="lazy"')
         self.assertNotContains(response, "bad=")
         self.assertNotContains(response, "&lt;script&gt;")
+
+
+from unittest.mock import patch
+from django.contrib.auth.models import User
+from django.utils import timezone
+from .models import Seat, Theater, Booking, EmailTask
+from .email_worker import queue_booking_email, process_pending_email_tasks, mask_email
+
+class EmailConfirmationTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(username="testuser", email="testuser@example.com", password="password")
+        cls.movie = Movie.objects.create(
+            name="Inception",
+            image="movies/test.jpg",
+            rating=9.0,
+            cast="Leo",
+            description="Dream within dream",
+        )
+        cls.theater = Theater.objects.create(
+            name="Cinema Hall 1",
+            movie=cls.movie,
+            time=timezone.now()
+        )
+        cls.seat1 = Seat.objects.create(theater=cls.theater, seat_number="A1")
+        cls.seat2 = Seat.objects.create(theater=cls.theater, seat_number="A2")
+
+    def test_mask_email_helper(self):
+        self.assertEqual(mask_email("gabriel@gmail.com"), "g***************@gmail.com")
+        self.assertEqual(mask_email("a@b.com"), "a*@b.com")
+        self.assertEqual(mask_email(None), None)
+        self.assertEqual(mask_email("notanemail"), "notanemail")
+
+    def test_queue_booking_email_creates_pending_task(self):
+        # Create bookings
+        booking1 = Booking.objects.create(user=self.user, seat=self.seat1, movie=self.movie, theater=self.theater)
+        booking2 = Booking.objects.create(user=self.user, seat=self.seat2, movie=self.movie, theater=self.theater)
+        
+        # Verify no email tasks exist yet
+        self.assertEqual(EmailTask.objects.count(), 0)
+        
+        # Queue the email
+        queue_booking_email([booking1.id, booking2.id], self.user.email)
+        
+        # Check task created
+        self.assertEqual(EmailTask.objects.count(), 1)
+        task = EmailTask.objects.first()
+        self.assertEqual(task.recipient, self.user.email)
+        self.assertEqual(task.status, 'pending')
+        self.assertEqual(task.retry_count, 0)
+        self.assertIn("A1, A2", task.html_content)
+        self.assertIn("Cinema Hall 1", task.html_content)
+        self.assertIn("₹300", task.html_content) # 2 seats * 150 = 300
+
+    def test_process_pending_email_tasks_success(self):
+        booking = Booking.objects.create(user=self.user, seat=self.seat1, movie=self.movie, theater=self.theater)
+        queue_booking_email([booking.id], self.user.email)
+        
+        task = EmailTask.objects.first()
+        self.assertEqual(task.status, 'pending')
+        
+        # Process task (should send email using locmem backend automatically in Django tests)
+        process_pending_email_tasks()
+        
+        # Reload task and check status
+        task.refresh_from_db()
+        self.assertEqual(task.status, 'sent')
+        
+        # Verify email was actually "sent" via django.core.mail.outbox
+        from django.core import mail
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, [self.user.email])
+        self.assertEqual(mail.outbox[0].subject, f"Booking Confirmed: {self.movie.name}")
+        self.assertIn("A1", mail.outbox[0].body)
+
+    @patch("django.core.mail.EmailMultiAlternatives.send")
+    def test_process_pending_email_tasks_failure_and_retry(self, mock_send):
+        # Force sending to fail
+        mock_send.side_effect = Exception("SMTP Connection Failed")
+        
+        booking = Booking.objects.create(user=self.user, seat=self.seat1, movie=self.movie, theater=self.theater)
+        queue_booking_email([booking.id], self.user.email)
+        
+        task = EmailTask.objects.first()
+        self.assertEqual(task.status, 'pending')
+        self.assertEqual(task.retry_count, 0)
+        
+        # Run process
+        process_pending_email_tasks()
+        
+        # Verify retry state
+        task.refresh_from_db()
+        self.assertEqual(task.status, 'pending') # Returns to pending for next retry
+        self.assertEqual(task.retry_count, 1)
+        self.assertEqual(task.error_message, "SMTP Connection Failed")
+        self.assertTrue(task.retry_at > timezone.now())
+
+    @patch("django.core.mail.EmailMultiAlternatives.send")
+    def test_process_pending_email_tasks_max_retries_exceeded(self, mock_send):
+        mock_send.side_effect = Exception("SMTP Connection Failed")
+        
+        booking = Booking.objects.create(user=self.user, seat=self.seat1, movie=self.movie, theater=self.theater)
+        queue_booking_email([booking.id], self.user.email)
+        
+        task = EmailTask.objects.first()
+        # Simulate that it has already retried twice
+        task.retry_count = 2
+        task.save()
+        
+        # Run process (third attempt)
+        process_pending_email_tasks()
+        
+        # Should now be failed
+        task.refresh_from_db()
+        self.assertEqual(task.status, 'failed')
+        self.assertEqual(task.retry_count, 3)
+
+    @patch("movies.views.queue_booking_email")
+    def test_booking_view_queues_confirmation_without_sending_inline(self, mock_queue):
+        self.client.force_login(self.user)
+
+        with self.captureOnCommitCallbacks(execute=True):
+            response = self.client.post(
+                reverse("book_seats", args=[self.theater.id]),
+                {"seats": [str(self.seat1.id), str(self.seat2.id)]},
+            )
+
+        self.assertRedirects(response, reverse("profile"), fetch_redirect_response=False)
+        self.assertEqual(Booking.objects.count(), 2)
+        self.seat1.refresh_from_db()
+        self.seat2.refresh_from_db()
+        self.assertTrue(self.seat1.is_booked)
+        self.assertTrue(self.seat2.is_booked)
+        mock_queue.assert_called_once()
+        queued_booking_ids, recipient = mock_queue.call_args.args
+        self.assertCountEqual(
+            queued_booking_ids,
+            list(Booking.objects.values_list("id", flat=True)),
+        )
+        self.assertEqual(recipient, self.user.email)

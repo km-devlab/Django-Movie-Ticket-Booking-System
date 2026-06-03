@@ -1,0 +1,19 @@
+Hi {{ user.username }},
+
+Your booking is successful! Here are your booking details:
+
+Movie: {{ movie.name }}
+Theater: {{ theater.name }}
+Show Timing: {{ show_time }}
+Seats: {{ seat_numbers }}
+Booking Date: {{ booking_date }}
+Payment ID: {{ payment_id }}
+Tickets: {{ ticket_count }}
+Total Paid: {{ total_price }}
+
+Please show this confirmation at the theater entrance to collect your physical tickets.
+
+Enjoy your movie!
+
+--
+BookMySeat Team

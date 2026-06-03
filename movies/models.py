@@ -120,3 +120,28 @@ class Booking(models.Model):
     booked_at=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'Booking by{self.user.username} for {self.seat.seat_number} at {self.theater.name}'
+
+
+class EmailTask(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('sent', 'Sent'),
+        ('failed', 'Failed'),
+    ]
+    recipient = models.EmailField()
+    subject = models.CharField(max_length=255)
+    html_content = models.TextField()
+    text_content = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    retry_count = models.IntegerField(default=0)
+    max_retries = models.IntegerField(default=3)
+    error_message = models.TextField(blank=True, null=True)
+    payment_id = models.CharField(max_length=100)
+    retry_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Email to {self.recipient} (Status: {self.status}, Payment ID: {self.payment_id})"
+

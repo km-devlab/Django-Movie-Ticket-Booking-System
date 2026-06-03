@@ -1,0 +1,39 @@
+{% extends "users/basic.html" %}
+{% block title %}Reset Demo Data{% endblock %}
+
+{% block content %}
+<div class="container py-4 py-lg-5">
+  <div class="panel-card mx-auto" style="max-width: 720px;">
+    <div class="panel-card-body">
+      <span class="hero-kicker">Admin only</span>
+      <h1 class="h4 mb-3">Reset demo booking data</h1>
+
+      {% if result %}
+      <div class="alert alert-cinema mb-4" role="alert">
+        {{ result }}
+      </div>
+      {% endif %}
+
+      <p class="text-secondary">
+        This clears bookings, unlocks seats, clears old email queue entries, and recreates a fresh showtime layout.
+      </p>
+
+      <dl class="text-secondary">
+        <dt>Movies with shows</dt>
+        <dd>24</dd>
+        <dt>Showtimes per movie</dt>
+        <dd>4</dd>
+        <dt>Seats per showtime</dt>
+        <dd>80</dd>
+      </dl>
+
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-cinema">
+          <i class="fas fa-rotate me-2"></i>Reset and seed live data
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

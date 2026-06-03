@@ -1,9 +1,10 @@
-# Import the function at the top of views.py
-from movies.services import send_booking_confirmation_email
 from django.core.paginator import Paginator
+from django.core.management import call_command
+from django.db import transaction
 from django.db.models import Count, Q
 from django.shortcuts import render, redirect ,get_object_or_404
 from .models import Movie,Theater,Seat,Booking, Genre, Language
+from .email_worker import queue_booking_email
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
@@ -147,19 +148,10 @@ def book_seats(request, theater_id):
             error_message = f"The following seats are already booked: {', '.join(error_seats)}"
             return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats, 'error': error_message})
         
-        # --- NEW DYNAMIC EMAIL TRIGGER ---
         if new_booking_ids:
-            # 1. Prepare dynamic layout data from the booking session
-            email_context = {
-                'show_title': theater.movie.name,
-                'show_timing': getattr(theater, 'timing', 'Check dashboard for timing'), # Fallback if timing field name differs
-                'seat_numbers': ", ".join(booked_seat_names),
-                'theater_info': f"{theater.name}, {theater.location if hasattr(theater, 'location') else ''}",
-                'payment_id': f"BKS-{new_booking_ids[0]}" # Fallback tracking ID using the primary booking reference
-            }
-            
-            # 2. Fire the service function directly
-            send_booking_confirmation_email(request.user.email, email_context)
+            booking_ids = list(new_booking_ids)
+            recipient_email = request.user.email
+            transaction.on_commit(lambda: queue_booking_email(booking_ids, recipient_email))
             
         return redirect('profile')
     return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats})
@@ -168,6 +160,29 @@ def book_seats(request, theater_id):
 def home(request):
     movies = Movie.objects.all()
     return render(request, 'home.html', {'movies': movies})
+
+
+@login_required(login_url='/login/')
+def admin_demo_reset(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    if request.method != 'POST':
+        return render(request, 'movies/admin_reset.html')
+
+    try:
+        call_command(
+            'seed_showtimes',
+            clear_bookings=True,
+            replace_showtimes=True,
+            movies=24,
+            theaters_per_movie=4,
+            rows=8,
+            cols=10,
+        )
+        result = "Success: bookings cleared, email queue cleared, seats unlocked, and fresh showtimes created."
+        return render(request, 'movies/admin_reset.html', {'result': result})
+    except Exception as e:
+        return render(request, 'movies/admin_reset.html', {'result': f"Reset failed: {str(e)}"}, status=500)
 
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
@@ -182,4 +197,3 @@ def emergency_database_reset(request):
         return HttpResponse("🚀 [SUCCESS] Live database fully reset to original state!")
     except Exception as e:
         return HttpResponse(f"❌ [ERROR] Reset failed: {str(e)}", status=500)
-
