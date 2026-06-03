@@ -1,5 +1,9 @@
 from django.core.paginator import Paginator
 from django.core.management import call_command
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.core.validators import validate_email
 from django.db import transaction
 from django.db.models import Count, Q
 from django.shortcuts import render, redirect ,get_object_or_404
@@ -183,6 +187,52 @@ def admin_demo_reset(request):
         return render(request, 'movies/admin_reset.html', {'result': result})
     except Exception as e:
         return render(request, 'movies/admin_reset.html', {'result': f"Reset failed: {str(e)}"}, status=500)
+
+
+@login_required(login_url='/login/')
+def admin_email_test(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+
+    result = None
+    recipient = request.user.email or getattr(settings, 'EMAIL_HOST_USER', '')
+    email_settings = {
+        'backend': settings.EMAIL_BACKEND,
+        'host': settings.EMAIL_HOST,
+        'port': settings.EMAIL_PORT,
+        'use_tls': settings.EMAIL_USE_TLS,
+        'use_ssl': settings.EMAIL_USE_SSL,
+        'host_user_set': bool(settings.EMAIL_HOST_USER),
+        'host_password_set': bool(settings.EMAIL_HOST_PASSWORD),
+        'default_from_email': settings.DEFAULT_FROM_EMAIL,
+    }
+
+    if request.method == 'POST':
+        recipient = request.POST.get('recipient', '').strip()
+        try:
+            validate_email(recipient)
+            sent_count = send_mail(
+                'BookMySeat live SMTP test',
+                'This test email was sent by the deployed BookMySeat app.',
+                settings.DEFAULT_FROM_EMAIL,
+                [recipient],
+                fail_silently=False,
+            )
+            result = f"Success: sent {sent_count} test email to {recipient}."
+        except ValidationError:
+            result = "Failed: enter a valid recipient email address."
+        except Exception as e:
+            result = f"Failed: {str(e)}"
+
+    return render(
+        request,
+        'movies/admin_email_test.html',
+        {
+            'result': result,
+            'recipient': recipient,
+            'email_settings': email_settings,
+        },
+    )
 
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test

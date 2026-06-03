@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from movies.views import admin_demo_reset
+from movies.views import admin_demo_reset, admin_email_test
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,6 +13,7 @@ urlpatterns = [
     
     # Secret DB Reset Route
     path('secret-db-reset/', admin_demo_reset, name='db_reset'),
+    path('admin-email-test/', admin_email_test, name='admin_email_test'),
 ]
 
 # Serve media files during development or if DEBUG is True

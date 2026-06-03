@@ -1,0 +1,51 @@
+{% extends "users/basic.html" %}
+{% block title %}Live Email Test{% endblock %}
+
+{% block content %}
+<div class="container py-4 py-lg-5">
+  <div class="panel-card mx-auto" style="max-width: 760px;">
+    <div class="panel-card-body">
+      <span class="hero-kicker">Admin only</span>
+      <h1 class="h4 mb-3">Live email test</h1>
+
+      {% if result %}
+      <div class="alert alert-cinema mb-4" role="alert">
+        {{ result }}
+      </div>
+      {% endif %}
+
+      <form method="post" class="mb-4">
+        {% csrf_token %}
+        <label for="recipient" class="form-label text-secondary">Send test email to</label>
+        <input
+          type="email"
+          id="recipient"
+          name="recipient"
+          value="{{ recipient }}"
+          class="form-control mb-3"
+          required
+        />
+        <button type="submit" class="btn btn-cinema">
+          <i class="fas fa-paper-plane me-2"></i>Send test email
+        </button>
+      </form>
+
+      <h2 class="h6 mb-3">Current deployed email configuration</h2>
+      <dl class="text-secondary mb-0">
+        <dt>Backend</dt>
+        <dd>{{ email_settings.backend }}</dd>
+        <dt>Host</dt>
+        <dd>{{ email_settings.host }}:{{ email_settings.port }}</dd>
+        <dt>TLS / SSL</dt>
+        <dd>TLS={{ email_settings.use_tls }} | SSL={{ email_settings.use_ssl }}</dd>
+        <dt>Email user set</dt>
+        <dd>{{ email_settings.host_user_set }}</dd>
+        <dt>Email password set</dt>
+        <dd>{{ email_settings.host_password_set }}</dd>
+        <dt>From email</dt>
+        <dd>{{ email_settings.default_from_email }}</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+{% endblock %}
