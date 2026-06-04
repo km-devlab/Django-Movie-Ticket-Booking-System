@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anymail',
     'users',
     'movies',
 ]
@@ -81,7 +82,17 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL='auth.User'
 
-EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+if os.environ.get('SENDGRID_API_KEY'):
+    EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+    ANYMAIL = {
+        "SENDGRID_API_KEY": os.environ.get('SENDGRID_API_KEY'),
+    }
+else:
+    EMAIL_BACKEND = os.environ.get(
+        'DJANGO_EMAIL_BACKEND',
+        'django.core.mail.backends.smtp.EmailBackend'
+    )
+
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', 10))
