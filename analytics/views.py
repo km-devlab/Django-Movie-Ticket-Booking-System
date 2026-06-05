@@ -40,23 +40,21 @@ def dashboard(request):
     start_date, end_date = get_date_range(request)
 
     # Revenue aggregations (daily, weekly, monthly)
-    revenue_key = f"revenue_{start_date}_{end_date}"
-    revenue_data = cache.get(revenue_key)
-    if not revenue_data:
-        # Use all bookings; there is no 'status' or 'price' field on Booking.
-        qs = Booking.objects.all()
-        qs = filter_by_date(qs, start_date, end_date)
-        # For demo purposes, count bookings per period as a proxy for revenue.
-        daily = qs.annotate(day=TruncDay('booked_at')).values('day').annotate(total=Count('id')).order_by('day')
-        weekly = qs.annotate(week=TruncWeek('booked_at')).values('week').annotate(total=Count('id')).order_by('week')
-        monthly = qs.annotate(month=TruncMonth('booked_at')).values('month').annotate(total=Count('id')).order_by('month')
-        revenue_data = {
-            'daily': list(daily),
-            'weekly': list(weekly),
-            'monthly': list(monthly),
-        }
-        cache.set(revenue_key, revenue_data, 300)
-
+    # Directly compute without caching to always show latest bookings
+    qs = Booking.objects.all()
+    qs = filter_by_date(qs, start_date, end_date)
+    daily = qs.annotate(day=TruncDay('booked_at')).values('day').annotate(total=Count('id')).order_by('day')
+    weekly = qs.annotate(week=TruncWeek('booked_at')).values('week').annotate(total=Count('id')).order_by('week')
+    monthly = qs.annotate(month=TruncMonth('booked_at')).values('month').annotate(total=Count('id')).order_by('month')
+    # Debug total bookings across the selected range
+    total_bookings = qs.count()
+    revenue_data = {
+        'daily': list(daily),
+        'weekly': list(weekly),
+        'monthly': list(monthly),
+        'total_bookings': total_bookings,
+    }
+    
     # Popular movies
     movies_key = f"popular_movies_{start_date}_{end_date}"
     popular_movies = cache.get(movies_key)

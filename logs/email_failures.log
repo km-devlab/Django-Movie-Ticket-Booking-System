@@ -136,3 +136,17 @@ INFO 2026-06-05 16:46:19,242 movies.email Background email worker thread started
 INFO 2026-06-05 16:46:39,995 movies.email Background email worker thread started.
 INFO 2026-06-05 16:47:37,642 movies.email Background email worker thread started.
 INFO 2026-06-05 16:48:53,416 movies.email Background email worker thread started.
+INFO 2026-06-05 16:53:01,079 movies.email Background email worker thread started.
+INFO 2026-06-05 16:53:59,129 movies.email Booking confirmation email sent payment_id=BMS-675D0D76574F recipient=m***************@gmail.com
+INFO 2026-06-05 16:54:20,359 movies.email Booking confirmation email sent payment_id=BMS-533BFEC1C776 recipient=m***************@gmail.com
+INFO 2026-06-05 16:54:38,343 movies.email Booking confirmation email sent payment_id=BMS-FA11287173C6 recipient=m***************@gmail.com
+INFO 2026-06-05 16:54:52,149 movies.email Booking confirmation email sent payment_id=BMS-9F0BC3C5E2FC recipient=m***************@gmail.com
+INFO 2026-06-05 16:59:11,281 movies.email Background email worker thread started.
+INFO 2026-06-05 16:59:11,504 movies.email Background email worker thread started.
+INFO 2026-06-05 17:09:06,421 movies.email Background email worker thread started.
+INFO 2026-06-05 17:09:51,134 movies.email Booking confirmation email sent payment_id=BMS-947822AFF364 recipient=m***************@gmail.com
+INFO 2026-06-05 17:10:01,228 movies.email Booking confirmation email sent payment_id=BMS-DB915CD0D378 recipient=m***************@gmail.com
+INFO 2026-06-05 17:16:28,431 movies.email Background email worker thread started.
+INFO 2026-06-05 17:27:30,568 movies.email Background email worker thread started.
+INFO 2026-06-05 17:47:55,771 movies.email Background email worker thread started.
+INFO 2026-06-05 17:48:18,813 movies.email Background email worker thread started.
