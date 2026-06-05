@@ -25,15 +25,19 @@ def register(request):
     return render(request,'users/register.html',{'form':form})
 
 def login_view(request):
+    # Preserve the intended redirect URL
+    next_url = request.GET.get('next') or request.POST.get('next')
     if request.method == 'POST':
-        form=AuthenticationForm(request,data=request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            user=form.get_user()
-            login(request,user)
-            return redirect('/')
+            user = form.get_user()
+            login(request, user)
+            # If a 'next' was supplied, redirect there; otherwise home
+            return redirect(next_url if next_url else '/analytics/')
     else:
-        form=AuthenticationForm()
-    return render(request,'users/login.html',{'form':form})
+        form = AuthenticationForm()
+    # Render the login template and pass the next URL so the form can include it as a hidden field
+    return render(request, 'users/login.html', {'form': form, 'next': next_url})
 
 @login_required(login_url='/login/')
 def profile(request):

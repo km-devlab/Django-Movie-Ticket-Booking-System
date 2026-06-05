@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'anymail',
     'users',
     'movies',
+    'analytics',
 ]
 
 MIDDLEWARE = [
@@ -191,6 +192,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
 
 # Logging Configuration
 LOGGING = {

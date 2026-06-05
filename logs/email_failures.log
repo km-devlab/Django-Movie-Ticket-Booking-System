@@ -1,0 +1,133 @@
+ERROR 2026-06-01 00:32:09,652 movies.email Booking confirmation email failed payment_id=97bac8ea-3476-4efe-ad42-38ac0d26abf9 recipient=g***************@gmail.com retry=0 error='charmap' codec can't encode character '\u20b9' in position 761: character maps to <undefined>
+INFO 2026-06-01 00:32:14,249 movies.email Booking confirmation email sent payment_id=97bac8ea-3476-4efe-ad42-38ac0d26abf9 recipient=g***************@gmail.com
+ERROR 2026-06-01 22:28:11,080 movies.email Booking confirmation email failed payment_id=38bc2073-fca6-4adb-9d46-6f9e83aaba21 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-01 22:28:11,085 movies.email Booking confirmation email failed payment_id=373ed45b-8bc5-4cf6-b0d0-b63cbe9ec533 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-01 22:28:11,102 movies.email Booking confirmation email sent payment_id=73de7e99-6d65-4a22-9735-6ebe793042bd recipient=t***************@example.com
+ERROR 2026-06-01 22:28:42,913 movies.email Booking confirmation email failed payment_id=d33a5198-c7c9-4aa1-80e7-c23602a9de9e recipient=v***************@example.com retry=0 error=''charmap' codec can't encode character '\u20b9' in position 762: character maps to <undefined>'
+ERROR 2026-06-01 22:28:42,949 movies.email Booking confirmation email failed payment_id=fd78eb56-094e-4a6d-b7a5-38865202a149 recipient=f***************@example.com retry=0 error='Simulated connection timeout (rupee ₹ error test)'
+INFO 2026-06-01 22:29:03,773 movies.email Booking confirmation email sent payment_id=fd78eb56-094e-4a6d-b7a5-38865202a149 recipient=f***************@example.com
+INFO 2026-06-01 22:29:03,846 movies.email Booking confirmation email sent payment_id=2d297ccf-b6f5-4845-8f9d-0461ffddf673 recipient=v***************@example.com
+ERROR 2026-06-01 22:29:03,870 movies.email Booking confirmation email failed payment_id=e4c72d9f-d42f-482a-96fc-13f415059b7c recipient=f***************@example.com retry=0 error='Simulated connection timeout (rupee ₹ error test)'
+INFO 2026-06-01 22:33:17,751 movies.email Booking confirmation email sent payment_id=e4c72d9f-d42f-482a-96fc-13f415059b7c recipient=f***************@example.com
+ERROR 2026-06-01 22:34:49,757 movies.email Booking confirmation email failed payment_id=d3f534b3-df8a-4747-885f-7faf676b9efe recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-01 22:34:49,757 movies.email Booking confirmation email failed payment_id=fcd94848-ea60-45d8-95ef-ee2b1aaa5259 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-01 22:34:49,773 movies.email Booking confirmation email sent payment_id=ff77bfd8-815b-4c48-bca0-4a29f99984cd recipient=t***************@example.com
+INFO 2026-06-01 22:48:00,552 movies.email Booking confirmation email sent payment_id=da6f2c7d-212c-4312-93c6-d8220751739d recipient=a***************@gmail.com
+INFO 2026-06-01 22:59:06,898 movies.email Booking confirmation email sent payment_id=7882fc65-0004-4860-a7f5-d4bba3f66a65 recipient=a***************@gmail.com
+INFO 2026-06-01 23:02:41,408 movies.email Booking confirmation email sent payment_id=67e4747e-e41b-4ee1-8887-0c2f48c97660 recipient=a***************@gmail.com
+INFO 2026-06-01 23:12:53,386 movies.email Booking confirmation email sent payment_id=b67a8687-5253-436a-ba3b-191e8db6b3a3 recipient=m***************@gmail.com
+ERROR 2026-06-02 00:09:46,569 movies.email Booking confirmation email failed payment_id=5e2c1e7e-cae7-4d8d-b719-adea05ec746a recipient=m***************@gmail.com retry=0 error='SMTP.starttls() got an unexpected keyword argument 'keyfile''
+ERROR 2026-06-02 00:09:52,042 movies.email Booking confirmation email failed payment_id=5e2c1e7e-cae7-4d8d-b719-adea05ec746a recipient=m***************@gmail.com retry=1 error='SMTP.starttls() got an unexpected keyword argument 'keyfile''
+ERROR 2026-06-02 00:10:02,543 movies.email Booking confirmation email failed payment_id=5e2c1e7e-cae7-4d8d-b719-adea05ec746a recipient=m***************@gmail.com retry=2 error='SMTP.starttls() got an unexpected keyword argument 'keyfile''
+ERROR 2026-06-02 00:18:57,275 movies.email Failed to send booking confirmation email to mkhrisha12@gmail.com. Error: SMTP.starttls() got an unexpected keyword argument 'keyfile'
+ERROR 2026-06-02 00:26:52,610 movies.email Failed to send booking confirmation email to mkhrisha12@gmail.com. Error: SMTP.starttls() got an unexpected keyword argument 'keyfile'
+ERROR 2026-06-02 00:27:32,639 movies.email Failed to send booking confirmation email to mkhrisha12@gmail.com. Error: SMTP.starttls() got an unexpected keyword argument 'keyfile'
+ERROR 2026-06-03 23:35:48,228 movies.email Booking confirmation email failed payment_id=BMS-B73505CAE673 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-03 23:35:48,325 movies.email Booking confirmation email failed payment_id=BMS-CC6ED511BB9A recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-03 23:35:48,515 movies.email Booking confirmation email sent payment_id=BMS-B487A5F18114 recipient=t***************@example.com
+ERROR 2026-06-03 23:36:42,239 movies.email Booking confirmation email failed payment_id=BMS-E4639BFD321B recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-03 23:36:42,308 movies.email Booking confirmation email failed payment_id=BMS-9F71F2EA93C7 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-03 23:36:42,628 movies.email Booking confirmation email sent payment_id=BMS-DF67E7DD84CF recipient=t***************@example.com
+ERROR 2026-06-03 23:37:24,310 movies.email Booking confirmation email failed payment_id=BMS-B1BD940F00FE recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-03 23:37:24,355 movies.email Booking confirmation email failed payment_id=BMS-17A23D2CE2A6 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-03 23:37:24,484 movies.email Booking confirmation email sent payment_id=BMS-57BCBAF62769 recipient=t***************@example.com
+ERROR 2026-06-03 23:38:14,517 movies.email Booking confirmation email failed payment_id=BMS-32CDA8F0BFF7 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-03 23:38:14,540 movies.email Booking confirmation email failed payment_id=BMS-D3062B36280F recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-03 23:38:14,600 movies.email Booking confirmation email sent payment_id=BMS-0896A2251989 recipient=t***************@example.com
+INFO 2026-06-03 23:41:34,292 movies.email Background email worker thread started.
+ERROR 2026-06-03 23:42:50,102 movies.email Booking confirmation email failed payment_id=BMS-3C0FE005CD5C recipient=m***************@gmail.com retry=0 error="SMTP.starttls() got an unexpected keyword argument 'keyfile'"
+ERROR 2026-06-03 23:42:55,771 movies.email Booking confirmation email failed payment_id=BMS-3C0FE005CD5C recipient=m***************@gmail.com retry=1 error="SMTP.starttls() got an unexpected keyword argument 'keyfile'"
+ERROR 2026-06-03 23:43:06,327 movies.email Booking confirmation email failed payment_id=BMS-3C0FE005CD5C recipient=m***************@gmail.com retry=2 error="SMTP.starttls() got an unexpected keyword argument 'keyfile'"
+INFO 2026-06-03 23:46:44,542 movies.email Background email worker thread started.
+ERROR 2026-06-03 23:47:36,291 movies.email Booking confirmation email failed payment_id=BMS-A7050C13AEF5 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-03 23:47:36,334 movies.email Booking confirmation email failed payment_id=BMS-E7183E8CED9E recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-03 23:47:36,433 movies.email Booking confirmation email sent payment_id=BMS-D06F0FD13F70 recipient=t***************@example.com
+INFO 2026-06-03 23:48:46,630 movies.email Background email worker thread started.
+ERROR 2026-06-03 23:49:56,815 movies.email Booking confirmation email failed payment_id=BMS-FBB773BB7B39 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-03 23:49:56,958 movies.email Booking confirmation email failed payment_id=BMS-69E43780BC04 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-03 23:49:57,306 movies.email Booking confirmation email sent payment_id=BMS-FE8158C4A663 recipient=t***************@example.com
+INFO 2026-06-03 23:51:38,776 movies.email Background email worker thread started.
+INFO 2026-06-03 23:52:18,175 movies.email Booking confirmation email sent payment_id=BMS-E763703C57E5 recipient=m***************@gmail.com
+INFO 2026-06-03 23:53:02,027 movies.email Booking confirmation email sent payment_id=BMS-CD0D5C07911C recipient=m***************@gmail.com
+INFO 2026-06-03 23:54:55,502 movies.email Background email worker thread started.
+INFO 2026-06-04 00:04:54,142 movies.email Background email worker thread started.
+INFO 2026-06-04 00:05:34,215 movies.email Booking confirmation email sent payment_id=BMS-C10537157B63 recipient=a***************@gmail.com
+INFO 2026-06-04 00:06:38,648 movies.email Booking confirmation email sent payment_id=BMS-96F9F17BD2A7 recipient=m***************@gmail.com
+INFO 2026-06-04 00:07:21,379 movies.email Background email worker thread started.
+INFO 2026-06-04 00:10:41,668 movies.email Background email worker thread started.
+ERROR 2026-06-04 00:11:15,826 movies.email Booking confirmation email failed payment_id=BMS-B0C2ED9BF056 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-04 00:11:15,935 movies.email Booking confirmation email failed payment_id=BMS-0A6FA529DF8D recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-04 00:11:16,043 movies.email Booking confirmation email sent payment_id=BMS-41551A8E53E9 recipient=t***************@example.com
+INFO 2026-06-04 00:14:46,424 movies.email Booking confirmation email sent payment_id=BMS-3212586992C4 recipient=m***************@gmail.com
+INFO 2026-06-04 00:16:15,842 movies.email Booking confirmation email sent payment_id=BMS-5F02F12257D4 recipient=m***************@gmail.com
+INFO 2026-06-04 00:16:54,331 movies.email Background email worker thread started.
+INFO 2026-06-04 00:19:09,202 movies.email Booking confirmation email sent payment_id=BMS-A4F9C25619C1 recipient=m***************@gmail.com
+INFO 2026-06-04 00:59:05,440 movies.email Background email worker thread started.
+ERROR 2026-06-04 00:59:16,019 movies.email Booking confirmation email failed payment_id=BMS-02BF2F016BA6 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-04 00:59:16,030 movies.email Booking confirmation email failed payment_id=BMS-593ED7B46D3B recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-04 00:59:16,051 movies.email Booking confirmation email sent payment_id=BMS-7A6DF45BDB29 recipient=t***************@example.com
+INFO 2026-06-04 01:00:44,231 movies.email Background email worker thread started.
+INFO 2026-06-04 01:01:38,335 movies.email Booking confirmation email sent payment_id=BMS-2E0CCABE3FCF recipient=m***************@gmail.com
+INFO 2026-06-04 01:02:32,825 movies.email Booking confirmation email sent payment_id=BMS-C73C46A71E86 recipient=m***************@gmail.com
+INFO 2026-06-04 01:02:56,158 movies.email Background email worker thread started.
+ERROR 2026-06-04 02:00:08,185 movies.email Booking confirmation email failed payment_id=BMS-22456DBA57D7 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-04 02:00:08,478 movies.email Booking confirmation email failed payment_id=BMS-C066C1258052 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-04 02:00:08,896 movies.email Booking confirmation email sent payment_id=BMS-EC622CF8758C recipient=t***************@example.com
+ERROR 2026-06-04 02:18:52,818 movies.email Booking confirmation email failed payment_id=BMS-C8076E26B2F3 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-04 02:18:52,823 movies.email Booking confirmation email failed payment_id=BMS-35CAC6B5E2D8 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-04 02:18:52,842 movies.email Booking confirmation email sent payment_id=BMS-34618675C59F recipient=t***************@example.com
+INFO 2026-06-04 02:56:35,076 movies.email Background email worker thread started.
+INFO 2026-06-04 02:57:09,015 movies.email Booking confirmation email sent payment_id=BMS-213825DF87A2 recipient=m***************@gmail.com
+INFO 2026-06-04 02:58:28,436 movies.email Background email worker thread started.
+INFO 2026-06-04 22:16:33,099 movies.email Background email worker thread started.
+ERROR 2026-06-04 22:16:49,949 movies.email Booking confirmation email failed payment_id=BMS-54E4E7648CF8 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-04 22:16:49,961 movies.email Booking confirmation email failed payment_id=BMS-024ECD3D4329 recipient=t***************@example.com retry=2 error='SMTP Connection Failed'
+INFO 2026-06-04 22:16:49,974 movies.email Booking confirmation email sent payment_id=BMS-2C6E15CE9FA1 recipient=t***************@example.com
+INFO 2026-06-04 22:17:02,882 movies.email Background email worker thread started.
+INFO 2026-06-05 00:07:34,360 movies.email Background email worker thread started.
+ERROR 2026-06-05 00:08:51,795 movies.email Booking confirmation email failed payment_id=BMS-BC77C102273F recipient=m***************@gmail.com retry=0 error='SendGrid API response 403 (Forbidden):\n{\n  "errors": [\n    {\n      "message": "The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements",\n      "field": "from",\n      "help": null\n    }\n  ]\n}'
+ERROR 2026-06-05 00:08:58,441 movies.email Booking confirmation email failed payment_id=BMS-BC77C102273F recipient=m***************@gmail.com retry=1 error='SendGrid API response 403 (Forbidden):\n{\n  "errors": [\n    {\n      "message": "The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements",\n      "field": "from",\n      "help": null\n    }\n  ]\n}'
+ERROR 2026-06-05 00:09:10,182 movies.email Booking confirmation email failed payment_id=BMS-BC77C102273F recipient=m***************@gmail.com retry=2 error='SendGrid API response 403 (Forbidden):\n{\n  "errors": [\n    {\n      "message": "The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements",\n      "field": "from",\n      "help": null\n    }\n  ]\n}'
+ERROR 2026-06-05 00:10:51,833 movies.email Booking confirmation email failed payment_id=BMS-A19B2C9CFEEA recipient=m***************@gmail.com retry=0 error='SendGrid API response 403 (Forbidden):\n{\n  "errors": [\n    {\n      "message": "The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements",\n      "field": "from",\n      "help": null\n    }\n  ]\n}'
+ERROR 2026-06-05 00:10:58,196 movies.email Booking confirmation email failed payment_id=BMS-A19B2C9CFEEA recipient=m***************@gmail.com retry=1 error='SendGrid API response 403 (Forbidden):\n{\n  "errors": [\n    {\n      "message": "The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements",\n      "field": "from",\n      "help": null\n    }\n  ]\n}'
+ERROR 2026-06-05 00:11:10,176 movies.email Booking confirmation email failed payment_id=BMS-A19B2C9CFEEA recipient=m***************@gmail.com retry=2 error='SendGrid API response 403 (Forbidden):\n{\n  "errors": [\n    {\n      "message": "The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements",\n      "field": "from",\n      "help": null\n    }\n  ]\n}'
+INFO 2026-06-05 00:28:22,638 movies.email Background email worker thread started.
+INFO 2026-06-05 00:32:19,850 movies.email Background email worker thread started.
+INFO 2026-06-05 00:33:39,265 movies.email Booking confirmation email sent payment_id=BMS-F551037C51C0 recipient=m***************@gmail.com
+INFO 2026-06-05 11:37:58,421 movies.email Background email worker thread started.
+INFO 2026-06-05 11:38:22,480 movies.email Booking confirmation email sent payment_id=BMS-6884C5E3591B recipient=m***************@gmail.com
+INFO 2026-06-05 12:46:34,731 movies.email Booking confirmation email sent payment_id=BMS-7336495E6ACE recipient=m***************@gmail.com
+INFO 2026-06-05 13:33:18,594 movies.email Background email worker thread started.
+INFO 2026-06-05 13:34:32,693 movies.email Background email worker thread started.
+INFO 2026-06-05 13:38:28,318 movies.email Background email worker thread started.
+INFO 2026-06-05 13:38:29,335 movies.email Background email worker thread started.
+INFO 2026-06-05 13:46:00,696 movies.email Background email worker thread started.
+INFO 2026-06-05 13:46:20,794 movies.email Background email worker thread started.
+INFO 2026-06-05 13:46:56,571 movies.email Background email worker thread started.
+INFO 2026-06-05 13:46:56,882 movies.email Background email worker thread started.
+INFO 2026-06-05 13:47:45,506 movies.email Background email worker thread started.
+INFO 2026-06-05 13:52:20,882 movies.email Background email worker thread started.
+INFO 2026-06-05 14:01:09,806 movies.email Background email worker thread started.
+INFO 2026-06-05 14:03:57,506 movies.email Background email worker thread started.
+INFO 2026-06-05 14:07:43,095 movies.email Background email worker thread started.
+INFO 2026-06-05 14:07:43,137 movies.email Background email worker thread started.
+INFO 2026-06-05 14:14:06,575 movies.email Background email worker thread started.
+INFO 2026-06-05 14:15:40,679 movies.email Background email worker thread started.
+INFO 2026-06-05 14:15:41,303 movies.email Background email worker thread started.
+INFO 2026-06-05 14:15:49,063 movies.email Background email worker thread started.
+INFO 2026-06-05 14:15:49,124 movies.email Background email worker thread started.
+INFO 2026-06-05 14:16:08,683 movies.email Background email worker thread started.
+INFO 2026-06-05 14:16:09,364 movies.email Background email worker thread started.
+INFO 2026-06-05 14:16:35,842 movies.email Background email worker thread started.
+INFO 2026-06-05 14:16:35,998 movies.email Background email worker thread started.
+INFO 2026-06-05 14:16:43,433 movies.email Background email worker thread started.
+INFO 2026-06-05 14:16:44,000 movies.email Background email worker thread started.
+INFO 2026-06-05 14:23:24,369 movies.email Background email worker thread started.
+INFO 2026-06-05 14:24:17,999 movies.email Background email worker thread started.
+INFO 2026-06-05 14:57:30,339 movies.email Background email worker thread started.
+INFO 2026-06-05 14:58:24,525 movies.email Booking confirmation email sent payment_id=BMS-835E1F73A688 recipient=m***************@gmail.com
+INFO 2026-06-05 15:01:24,260 movies.email Booking confirmation email sent payment_id=BMS-B612E3DB1419 recipient=m***************@gmail.com
+INFO 2026-06-05 16:28:00,390 movies.email Background email worker thread started.
+INFO 2026-06-05 16:29:23,193 movies.email Background email worker thread started.
+ERROR 2026-06-05 16:31:03,020 movies.email Failed to queue booking confirmation email: recipient email is empty
+INFO 2026-06-05 16:32:48,494 movies.email Booking confirmation email sent payment_id=BMS-0761F6F19DFF recipient=m***************@gmail.com

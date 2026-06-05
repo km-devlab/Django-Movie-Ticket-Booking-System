@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Analytics Dashboard</h1>
+{% if start_date %}<p>From {{ start_date }} to {{ end_date }}</p>{% endif %}
+<div class="cards">
+  <div class="card"><h2>Revenue</h2>{% for period, data in revenue.items %}<h3>{{ period|title }}</h3><ul>{% for item in data %}<li>{{ item.day|default:item.week|default:item.month }}: ${{ item.total }}</li>{% endfor %}</ul>{% endfor %}</div>
+  <div class="card"><h2>Popular Movies</h2><ul>{% for m in popular_movies %}<li>{{ m.movie__title }} ({{ m.count }})</li>{% endfor %}</ul></div>
+  <div class="card"><h2>Busiest Theaters</h2><ul>{% for t in busiest_theaters %}<li>{{ t.theater__name }} – {{ t.occupancy|floatformat:2 }}</li>{% endfor %}</ul></div>
+  <div class="card"><h2>Peak Booking Hours</h2><ul>{% for h in peak_hours %}<li>{{ h.hour }} – {{ h.count }}</li>{% endfor %}</ul></div>
+  <div class="card"><h2>Cancellation Rate</h2><p>{{ cancellation_rate|floatformat:2 }}</p></div>
+</div>
+{% endblock %}

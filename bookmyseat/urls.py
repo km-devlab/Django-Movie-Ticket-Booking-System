@@ -10,6 +10,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('users.urls')),
     path('movies/', include('movies.urls')),
+    path('analytics/', include('analytics.urls')),
     
     # Secret DB Reset Route
     path('secret-db-reset/', admin_demo_reset, name='db_reset'),

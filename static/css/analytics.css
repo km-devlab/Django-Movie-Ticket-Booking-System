@@ -1,0 +1,58 @@
+/* Neon BookMySeat analytics theme */
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes gradientBG {
+  0% { background-position:0% 50%; }
+  50% { background-position:100% 50%; }
+  100% { background-position:0% 50%; }
+}
+.container.py-5 {
+  animation: gradientBG 12s ease infinite, fadeInUp 0.8s ease-out;
+  background: linear-gradient(45deg, #0ff, #ff6b6b, #4ecdc4);
+  background-size: 400% 400%;
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0,255,255,0.3), inset 0 0 30px rgba(0,255,255,0.2);
+}
+.row > .col-md-6 {
+  margin-bottom: 1.5rem;
+}
+.list-group-item {
+  background: rgba(20,20,40,0.5);
+  border: none;
+  color: #fff;
+  transition: background 0.3s, transform 0.3s;
+}
+.list-group-item:hover {
+  background: rgba(0,255,255,0.2);
+  transform: translateX(5px);
+}
+.list-group-item .badge {
+  background: #0ff;
+  color: #000;
+  transition: transform 0.3s;
+}
+.list-group-item:hover .badge {
+  transform: scale(1.15);
+}
+h4 {
+  color: rgb(15, 93, 93);
+  position: relative;
+  padding-bottom: 0.4rem;
+}
+h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #0ff;
+  transition: width .4s;
+}
+h4:hover::after {
+  width: 100%;
+}

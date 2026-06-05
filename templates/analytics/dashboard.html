@@ -1,0 +1,117 @@
+{% extends "users/basic.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/analytics.css' %}">
+    <style>
+      /* Immediate visual cue */
+      .container.py-5 { background: rgba(255,255,255,0.15) !important; backdrop-filter: blur(10px) !important; }
+      h2 { color: #7b1313 !important; }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="grid-overlay"></div>
+  <div style="background: linear-gradient(45deg, #0ff, #ff6b6b, #4ecdc4); background-size:400% 400%; animation: gradientBG 12s ease infinite; backdrop-filter: blur(12px); border-radius:12px; padding:2rem; box-shadow:0 0 20px rgba(0,255,255,0.3), inset 0 0 30px rgba(0,255,255,0.2);">
+  <h2 class="mb-4">Analytics Dashboard</h2>
+
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div id="chart-container" style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px;">
+        <canvas id="revenueChart"></canvas>
+<p class="chart-description" style="color:rgb(157, 33, 89); font-weight:bold; text-align:center; margin-top:0.5rem;">
+  <strong>X‑axis:</strong> Date (day)  <strong>Y‑axis:</strong> Total bookings (revenue count)
+</p>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('revenueChart').getContext('2d');
+  const labels = [{% for entry in revenue.daily %}'{{ entry.day|date:"Y-m-d" }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const data = [{% for entry in revenue.daily %}{{ entry.total }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Daily Revenue (bookings)',
+        data: data,
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        borderColor: '#761111',
+        borderWidth: 2,
+        tension: 0.3,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Revenue (bookings count)</h4>
+      <ul class="list-group mb-3">
+        {% for entry in revenue.daily %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ entry.day|date:"Y-m-d" }}
+          <span class="badge bg-primary rounded-pill">{{ entry.total }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No data</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h4>Popular Movies</h4>
+      <ul class="list-group mb-3">
+        {% for movie in popular_movies %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ movie.movie__name }}
+          <span class="badge bg-success rounded-pill">{{ movie.count }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No data</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h4>Busiest Theaters (bookings)</h4>
+      <ul class="list-group mb-3">
+        {% for th in busiest_theaters %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ th.theater__name }}
+          <span class="badge bg-info rounded-pill">{{ th.booked }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No data</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h4>Peak Booking Hours</h4>
+      <ul class="list-group mb-3">
+        {% for hour in peak_hours %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ hour.hour|date:"H:00" }}
+          <span class="badge bg-warning text-dark rounded-pill">{{ hour.count }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No data</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="mt-4">
+    <h4>Cancellation Rate</h4>
+    <p>{{ cancellation_rate|floatformat:2 }}% (placeholder)</p>
+  </div>
+</div>
+{% endblock %}
