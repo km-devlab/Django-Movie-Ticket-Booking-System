@@ -8,15 +8,51 @@
   50% { background-position:100% 50%; }
   100% { background-position:0% 50%; }
 }
-.container.py-5 {
-  animation: gradientBG 12s ease infinite, fadeInUp 0.8s ease-out;
-  background: linear-gradient(45deg, #0ff, #ff6b6b, #4ecdc4);
-  background-size: 400% 400%;
+.analytics-content {
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out;
   backdrop-filter: blur(12px);
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 0 20px rgba(0,255,255,0.3), inset 0 0 30px rgba(0,255,255,0.2);
 }
+
+/* Animated gradient background */
+.analytics-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #0ff, #ff6b6b, #4ecdc4);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  z-index: 0;
+}
+
+.analytics-content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.15) 0, rgba(255,255,255,0.15) 1px, transparent 1px, transparent 24px),
+                    repeating-linear-gradient(90deg, rgba(255,255,255,0.15) 0, rgba(255,255,255,0.15) 1px, transparent 1px, transparent 24px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.analytics-content > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+/* Ensure child elements appear above the grid */
+.container.py-5 > * {
+  position: relative;
+  z-index: 2;
+}
+
+
 .row > .col-md-6 {
   margin-bottom: 1.5rem;
 }

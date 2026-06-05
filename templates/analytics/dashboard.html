@@ -4,54 +4,22 @@
 <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
     <style>
       /* Immediate visual cue */
-      .container.py-5 { background: rgba(255,255,255,0.15) !important; backdrop-filter: blur(10px) !important; }
+      .analytics-content { background: rgba(255,255,255,0.15) !important; backdrop-filter: blur(10px) !important; }
       h2 { color: #7b1313 !important; }
     </style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<div class="analytics-content py-5">
   <div class="grid-overlay"></div>
-  <div style="background: linear-gradient(45deg, #0ff, #ff6b6b, #4ecdc4); background-size:400% 400%; animation: gradientBG 12s ease infinite; backdrop-filter: blur(12px); border-radius:12px; padding:2rem; box-shadow:0 0 20px rgba(0,255,255,0.3), inset 0 0 30px rgba(0,255,255,0.2);">
+  <div>
   <h2 class="mb-4">Analytics Dashboard</h2>
 
   <div class="row">
-    <div class="col-12 mb-4">
-      <div id="chart-container" style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px;">
-        <canvas id="revenueChart"></canvas>
-<p class="chart-description" style="color:rgb(157, 33, 89); font-weight:bold; text-align:center; margin-top:0.5rem;">
-  <strong>X‑axis:</strong> Date (day)  <strong>Y‑axis:</strong> Total bookings (revenue count)
-</p>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('revenueChart').getContext('2d');
-  const labels = [{% for entry in revenue.daily %}'{{ entry.day|date:"Y-m-d" }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
-  const data = [{% for entry in revenue.daily %}{{ entry.total }}{% if not forloop.last %}, {% endif %}{% endfor %}];
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Daily Revenue (bookings)',
-        data: data,
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        borderColor: '#761111',
-        borderWidth: 2,
-        tension: 0.3,
-        fill: true,
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
-</script>
-      </div>
-    </div>
-  </div>
+<div class="col-12 mb-4">
+  <!-- Chart removed per user request -->
+  <!-- <p class="text-muted">Analytics visualisation has been disabled.</p> -->
+</div>
 
   <div class="row">
     <div class="col-md-6">
