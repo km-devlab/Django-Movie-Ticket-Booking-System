@@ -131,3 +131,8 @@ INFO 2026-06-05 16:28:00,390 movies.email Background email worker thread started
 INFO 2026-06-05 16:29:23,193 movies.email Background email worker thread started.
 ERROR 2026-06-05 16:31:03,020 movies.email Failed to queue booking confirmation email: recipient email is empty
 INFO 2026-06-05 16:32:48,494 movies.email Booking confirmation email sent payment_id=BMS-0761F6F19DFF recipient=m***************@gmail.com
+INFO 2026-06-05 16:45:58,529 movies.email Background email worker thread started.
+INFO 2026-06-05 16:46:19,242 movies.email Background email worker thread started.
+INFO 2026-06-05 16:46:39,995 movies.email Background email worker thread started.
+INFO 2026-06-05 16:47:37,642 movies.email Background email worker thread started.
+INFO 2026-06-05 16:48:53,416 movies.email Background email worker thread started.

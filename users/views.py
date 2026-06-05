@@ -32,8 +32,12 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # If a 'next' was supplied, redirect there; otherwise home
-            return redirect(next_url if next_url else '/analytics/')
+        from django.urls import reverse
+        # Redirect based on role using named URLs
+        if next_url:
+            return redirect(next_url)
+        else:
+            return redirect(reverse('analytics_dashboard') if user.is_staff else reverse('home'))
     else:
         form = AuthenticationForm()
     # Render the login template and pass the next URL so the form can include it as a hidden field
