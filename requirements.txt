@@ -28,4 +28,5 @@ vine==5.1.0
 wcwidth==0.7.0
 whitenoise==6.7.0
 django-anymail[sendgrid]
-
+stripe==1.42.8
+Pillow==12.2.0
