@@ -142,6 +142,7 @@ class EmailTask(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return f"Email to {self.recipient} (Status: {self.status}, Payment ID: {self.payment_id})"
 

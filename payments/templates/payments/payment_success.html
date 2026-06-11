@@ -1,0 +1,54 @@
+{% extends "users/basic.html" %}
+
+{% block title %}Payment Successful{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+```
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center p-5">
+
+                <div class="mb-4">
+                    <h1 class="display-5 text-success">
+                        ✅ Payment Successful
+                    </h1>
+                </div>
+
+                <p class="lead">
+                    Your payment has been received successfully.
+                </p>
+
+                <p class="text-muted">
+                    We are currently verifying your payment and confirming your booking.
+                </p>
+
+                <p class="text-muted">
+                    A booking confirmation email will be sent to your registered email address shortly.
+                </p>
+
+                <hr>
+
+                <div class="mt-4">
+                    <a href="/" class="btn btn-primary me-2">
+                        Back to Home
+                    </a>
+
+                    <a href="/profile/" class="btn btn-success">
+                        View My Bookings
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+```
+
+</div>
+{% endblock %}

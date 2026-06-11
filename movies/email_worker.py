@@ -4,7 +4,9 @@ import time
 import uuid
 import logging
 import threading
+
 from datetime import timedelta
+
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -19,6 +21,9 @@ from .models import Booking, EmailTask
 logger = logging.getLogger('movies.email')
 _worker_started = False
 
+
+
+
 def mask_email(email):
     """
     Mask recipient email addresses to prevent exposure of sensitive data in logs.
@@ -32,6 +37,7 @@ def mask_email(email):
     return f"{local[0]}{'*' * 15}@{domain}"
 
 
+
 def queue_booking_email(booking_ids, recipient_email):
     """
     Retrieves booking details, renders HTML/text templates,
@@ -40,13 +46,13 @@ def queue_booking_email(booking_ids, recipient_email):
     if not recipient_email:
         logger.error("Failed to queue booking confirmation email: recipient email is empty")
         return
-        
+    
     try:
         bookings = Booking.objects.filter(id__in=booking_ids).select_related('movie', 'theater', 'seat', 'user').order_by('seat__seat_number')
         if not bookings.exists():
             logger.error("Failed to queue booking confirmation email: no bookings found")
             return
-            
+        
         first_booking = bookings.first()
         user = first_booking.user
         movie = first_booking.movie
@@ -69,7 +75,7 @@ def queue_booking_email(booking_ids, recipient_email):
             'ticket_count': len(bookings),
             'total_price': f"₹{total_price}",
             'show_time': theater.time.strftime("%d %b %Y, %I:%M %p"),
-            'booking_date': timezone.now().strftime("%d %b %Y, %I:%M %p"),
+            'booking_date': timezone.localtime().strftime("%d %b %Y, %I:%M %p"),
         }
         
         # Render contents using Django template engine
@@ -78,7 +84,7 @@ def queue_booking_email(booking_ids, recipient_email):
         
         subject = f"Booking Confirmed: {movie.name}"
         
-        # Create EmailTask record
+        # Create EmailTask record without QR image
         EmailTask.objects.create(
             recipient=recipient_email,
             subject=subject,
@@ -86,8 +92,10 @@ def queue_booking_email(booking_ids, recipient_email):
             text_content=text_content,
             payment_id=payment_id,
             status='pending',
-            retry_at=timezone.now()
+            retry_at=timezone.now(),
         )
+        # Immediately process pending emails (useful in dev/debug)
+        process_pending_email_tasks()
         
     except Exception as e:
         logger.exception("Error while queuing booking confirmation email")
@@ -119,7 +127,12 @@ def process_pending_email_tasks():
                 to=[task.recipient]
             )
             msg.attach_alternative(task.html_content, "text/html")
+            # Ensure related multipart for inline image
+            msg.mixed_subtype = 'related'
+            # Set UTF-8 encoding to handle Unicode characters like the rupee symbol
+            msg.encoding = 'utf-8'
             msg.send()
+
             
             # Successfully sent
             task.status = 'sent'

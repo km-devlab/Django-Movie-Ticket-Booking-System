@@ -8,9 +8,11 @@ from django.db import transaction
 from django.db.models import Count, Q
 from django.shortcuts import render, redirect ,get_object_or_404
 from .models import Movie,Theater,Seat,Booking, Genre, Language
-from .email_worker import queue_booking_email
+from .email_worker import queue_booking_email, process_pending_email_tasks
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.urls import reverse
+from urllib.parse import urlencode
 
 MOVIE_SORTS = {
     "name": ("Name A-Z", "name"),
@@ -120,45 +122,39 @@ def theater_list(request,movie_id):
 def book_seats(request, theater_id):
     theater = get_object_or_404(Theater, id=theater_id)
     seats = Seat.objects.filter(theater=theater)
+
     if request.method == 'POST':
+
         selected_seats = request.POST.getlist('seats')
-        error_seats = []
+
         if not selected_seats:
-            return render(request, "movies/seat_selection.html", {'theater': theater, "seats": seats, 'error': "No seat selected"})
-        
-        new_booking_ids = []
-        booked_seat_names = []  # To collect names for the email template
-        
-        for seat_id in selected_seats:
-            seat = get_object_or_404(Seat, id=seat_id, theater=theater)
-            if seat.is_booked:
-                error_seats.append(seat.seat_number)
-                continue
-            try:
-                booking = Booking.objects.create(
-                    user=request.user,
-                    seat=seat,
-                    movie=theater.movie,
-                    theater=theater
-                )
-                new_booking_ids.append(booking.id)
-                booked_seat_names.append(seat.seat_number)  # Add seat number (e.g., "A1")
-                seat.is_booked = True
-                seat.save()
-            except IntegrityError:
-                error_seats.append(seat.seat_number)
-                
-        if error_seats:
-            error_message = f"The following seats are already booked: {', '.join(error_seats)}"
-            return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats, 'error': error_message})
-        
-        if new_booking_ids:
-            booking_ids = list(new_booking_ids)
-            recipient_email = request.user.email
-            transaction.on_commit(lambda: queue_booking_email(booking_ids, recipient_email))
-            
-        return redirect('profile')
-    return render(request, 'movies/seat_selection.html', {'theater': theater, "seats": seats})
+            return render(
+                request,
+                "movies/seat_selection.html",
+                {
+                    'theater': theater,
+                    'seats': seats,
+                    'error': 'No seat selected'
+                }
+            )
+
+        query_string = urlencode({
+            "theater_id": theater.id,
+            "seat_ids": ",".join(selected_seats),
+        })
+
+        return redirect(
+            f"{reverse('create_checkout_session')}?{query_string}"
+        )
+
+    return render(
+        request,
+        'movies/seat_selection.html',
+        {
+            'theater': theater,
+            'seats': seats
+        }
+    )
 
 
 def home(request):

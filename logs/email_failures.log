@@ -150,3 +150,412 @@ INFO 2026-06-05 17:16:28,431 movies.email Background email worker thread started
 INFO 2026-06-05 17:27:30,568 movies.email Background email worker thread started.
 INFO 2026-06-05 17:47:55,771 movies.email Background email worker thread started.
 INFO 2026-06-05 17:48:18,813 movies.email Background email worker thread started.
+INFO 2026-06-06 22:38:48,233 movies.email Background email worker thread started.
+INFO 2026-06-06 22:39:39,673 movies.email Booking confirmation email sent payment_id=BMS-42BDA3DBC1CE recipient=m***************@gmail.com
+INFO 2026-06-06 23:09:06,203 movies.email Background email worker thread started.
+INFO 2026-06-06 23:09:55,152 movies.email Booking confirmation email sent payment_id=BMS-62D1EF5C4533 recipient=m***************@gmail.com
+INFO 2026-06-06 23:11:03,415 movies.email Background email worker thread started.
+INFO 2026-06-06 23:11:14,597 movies.email Background email worker thread started.
+INFO 2026-06-06 23:11:52,507 movies.email Background email worker thread started.
+ERROR 2026-06-06 23:12:20,128 movies.email Error while queuing booking confirmation email
+Traceback (most recent call last):
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table movies_emailtask has no column named qr_image_bytes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\movies\email_worker.py", line 111, in queue_booking_email
+    EmailTask.objects.create(
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 1220, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table movies_emailtask has no column named qr_image_bytes
+ERROR 2026-06-06 23:13:06,455 movies.email Error while queuing booking confirmation email
+Traceback (most recent call last):
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table movies_emailtask has no column named qr_image_bytes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\movies\email_worker.py", line 111, in queue_booking_email
+    EmailTask.objects.create(
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\base.py", line 1220, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table movies_emailtask has no column named qr_image_bytes
+INFO 2026-06-06 23:14:49,056 movies.email Background email worker thread started.
+INFO 2026-06-06 23:14:52,433 movies.email Background email worker thread started.
+INFO 2026-06-06 23:15:10,768 movies.email Background email worker thread started.
+INFO 2026-06-06 23:15:10,774 movies.email Background email worker thread started.
+INFO 2026-06-06 23:15:46,171 movies.email Background email worker thread started.
+INFO 2026-06-06 23:15:46,371 movies.email Background email worker thread started.
+INFO 2026-06-06 23:15:59,299 movies.email Background email worker thread started.
+ERROR 2026-06-06 23:16:28,075 movies.email Error while queuing booking confirmation email
+Traceback (most recent call last):
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table movies_emailtask has no column named qr_image_bytes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\djnago-bookmyshow-clone-main\djnago-bookmyshow-clone-main\movies\email_worker.py", line 82, in queue_booking_email
+    EmailTask.objects.create(
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\base.py", line 776, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\base.py", line 919, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1416, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khrisham\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table movies_emailtask has no column named qr_image_bytes
+INFO 2026-06-06 23:19:53,865 movies.email Background email worker thread started.
+INFO 2026-06-06 23:19:56,397 movies.email Background email worker thread started.
+INFO 2026-06-06 23:19:58,697 movies.email Background email worker thread started.
+INFO 2026-06-06 23:20:28,148 movies.email Booking confirmation email sent payment_id=BMS-EB1212CCB06C recipient=m***************@gmail.com
+INFO 2026-06-06 23:28:40,912 movies.email Booking confirmation email sent payment_id=BMS-C3939136BF2E recipient=m***************@gmail.com
+INFO 2026-06-06 23:31:52,275 movies.email Background email worker thread started.
+INFO 2026-06-06 23:33:46,207 movies.email Booking confirmation email sent payment_id=BMS-BBF80BC5142B recipient=m***************@gmail.com
+INFO 2026-06-06 23:55:57,297 movies.email Background email worker thread started.
+INFO 2026-06-06 23:56:27,684 movies.email Booking confirmation email sent payment_id=BMS-3F4B09C347C1 recipient=m***************@gmail.com
+INFO 2026-06-07 00:03:33,178 movies.email Booking confirmation email sent payment_id=BMS-0CA17DE69371 recipient=m***************@gmail.com
+INFO 2026-06-07 00:03:58,590 movies.email Background email worker thread started.
+INFO 2026-06-07 00:08:54,681 movies.email Background email worker thread started.
+INFO 2026-06-07 00:09:54,750 movies.email Booking confirmation email sent payment_id=BMS-687C7A69193E recipient=m***************@gmail.com
+INFO 2026-06-07 00:15:23,903 movies.email Background email worker thread started.
+INFO 2026-06-07 00:16:23,976 movies.email Booking confirmation email sent payment_id=BMS-7D7475AE0947 recipient=m***************@gmail.com
+INFO 2026-06-07 00:17:51,498 movies.email Background email worker thread started.
+INFO 2026-06-07 00:17:51,681 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:01,137 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:01,518 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:15,953 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:16,427 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:23,521 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:23,611 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:48,421 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:48,897 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:56,918 movies.email Background email worker thread started.
+INFO 2026-06-07 00:18:57,825 movies.email Background email worker thread started.
+INFO 2026-06-07 00:22:32,481 movies.email Background email worker thread started.
+INFO 2026-06-07 00:22:33,289 movies.email Background email worker thread started.
+INFO 2026-06-07 00:30:21,264 movies.email Background email worker thread started.
+INFO 2026-06-07 00:31:26,336 movies.email Booking confirmation email sent payment_id=BMS-D4915456950B recipient=m***************@gmail.com
+INFO 2026-06-07 00:38:57,204 movies.email Booking confirmation email sent payment_id=BMS-BD955FB54E8B recipient=m***************@gmail.com
+INFO 2026-06-07 00:39:37,247 movies.email Booking confirmation email sent payment_id=BMS-76372B345AA9 recipient=m***************@gmail.com
+INFO 2026-06-07 01:02:02,032 movies.email Background email worker thread started.
+INFO 2026-06-07 01:02:29,156 movies.email Background email worker thread started.
+INFO 2026-06-07 01:02:37,711 movies.email Background email worker thread started.
+INFO 2026-06-07 01:04:41,130 movies.email Background email worker thread started.
+c
+INFO 2026-06-07 01:08:52,339 movies.email Background email worker thread started.
+INFO 2026-06-07 01:09:06,237 movies.email Booking confirmation email sent payment_id=BMS-68FF7369415C recipient=m***************@gmail.com
+INFO 2026-06-07 01:10:26,943 movies.email Booking confirmation email sent payment_id=BMS-8CE800A10619 recipient=m***************@gmail.com
+INFO 2026-06-07 01:11:53,897 movies.email Booking confirmation email sent payment_id=BMS-DA5D3E11840A recipient=m***************@gmail.com
+INFO 2026-06-07 01:17:05,914 movies.email Background email worker thread started.
+INFO 2026-06-07 01:17:34,468 movies.email Booking confirmation email sent payment_id=BMS-F14BBEC26956 recipient=m***************@gmail.com
+INFO 2026-06-07 01:19:15,632 movies.email Booking confirmation email sent payment_id=BMS-D496B9957D13 recipient=m***************@gmail.com
+INFO 2026-06-07 01:20:52,204 movies.email Booking confirmation email sent payment_id=BMS-EBEBB632998F recipient=m***************@gmail.com
+INFO 2026-06-07 01:26:33,949 movies.email Background email worker thread started.
+INFO 2026-06-07 01:26:42,202 movies.email Background email worker thread started.
+INFO 2026-06-07 01:27:01,298 movies.email Booking confirmation email sent payment_id=BMS-5232A058F972 recipient=m***************@gmail.com
+INFO 2026-06-07 01:28:57,816 movies.email Booking confirmation email sent payment_id=BMS-0482214EBBD1 recipient=m***************@gmail.com
+INFO 2026-06-07 01:29:52,245 movies.email Background email worker thread started.
+INFO 2026-06-07 01:29:54,347 movies.email Background email worker thread started.
+INFO 2026-06-07 01:30:32,725 movies.email Background email worker thread started.
+INFO 2026-06-07 01:31:24,001 movies.email Booking confirmation email sent payment_id=BMS-7F5418A30644 recipient=m***************@gmail.com
+INFO 2026-06-07 01:33:20,148 movies.email Booking confirmation email sent payment_id=BMS-653FBCC6AB21 recipient=m***************@gmail.com
+INFO 2026-06-07 01:33:50,833 movies.email Booking confirmation email sent payment_id=BMS-B51E0521C662 recipient=m***************@gmail.com
+INFO 2026-06-07 01:34:12,754 movies.email Booking confirmation email sent payment_id=BMS-42691742B394 recipient=m***************@gmail.com
+INFO 2026-06-07 01:36:26,591 movies.email Booking confirmation email sent payment_id=BMS-E94185687221 recipient=m***************@gmail.com
+INFO 2026-06-07 01:54:54,697 movies.email Booking confirmation email sent payment_id=BMS-C765D3967682 recipient=m***************@gmail.com
+INFO 2026-06-07 02:07:34,097 movies.email Background email worker thread started.
+INFO 2026-06-07 02:08:30,911 movies.email Booking confirmation email sent payment_id=BMS-4778239DFC6E recipient=m***************@gmail.com
+INFO 2026-06-07 02:40:42,397 movies.email Background email worker thread started.
+INFO 2026-06-07 02:41:10,041 movies.email Booking confirmation email sent payment_id=BMS-7D7DB65C254B recipient=m***************@gmail.com
+INFO 2026-06-07 02:44:23,423 movies.email Booking confirmation email sent payment_id=BMS-689ED6F8C876 recipient=m***************@gmail.com
+INFO 2026-06-07 02:46:56,723 movies.email Background email worker thread started.
+INFO 2026-06-07 02:46:57,794 movies.email Background email worker thread started.
+INFO 2026-06-07 02:47:12,321 movies.email Booking confirmation email sent payment_id=BMS-3CE08AEA21ED recipient=m***************@gmail.com
+INFO 2026-06-07 02:47:43,898 movies.email Background email worker thread started.
+INFO 2026-06-07 02:47:44,484 movies.email Background email worker thread started.
+INFO 2026-06-07 02:48:50,678 movies.email Booking confirmation email sent payment_id=BMS-E3248C67764B recipient=m***************@gmail.com
+INFO 2026-06-07 02:50:12,779 movies.email Background email worker thread started.
+INFO 2026-06-07 02:50:54,917 movies.email Booking confirmation email sent payment_id=BMS-978DFD433FDF recipient=m***************@gmail.com
+INFO 2026-06-07 02:54:25,519 movies.email Booking confirmation email sent payment_id=BMS-B6F1077D09BB recipient=m***************@gmail.com
+INFO 2026-06-07 02:57:57,429 movies.email Background email worker thread started.
+INFO 2026-06-07 02:58:27,935 movies.email Background email worker thread started.
+INFO 2026-06-07 02:58:47,481 movies.email Booking confirmation email sent payment_id=BMS-A5C3C0CB36E3 recipient=m***************@gmail.com
+INFO 2026-06-07 03:04:49,285 movies.email Background email worker thread started.
+INFO 2026-06-07 03:04:50,183 movies.email Background email worker thread started.
+INFO 2026-06-07 03:06:49,897 movies.email Background email worker thread started.
+INFO 2026-06-07 03:07:08,848 movies.email Background email worker thread started.
+INFO 2026-06-07 03:07:08,920 movies.email Background email worker thread started.
+INFO 2026-06-07 03:07:42,371 movies.email Background email worker thread started.
+INFO 2026-06-07 03:07:42,464 movies.email Background email worker thread started.
+INFO 2026-06-07 03:08:02,598 movies.email Background email worker thread started.
+INFO 2026-06-07 03:08:19,065 movies.email Booking confirmation email sent payment_id=BMS-3FBADD99111C recipient=m***************@gmail.com
+INFO 2026-06-07 03:14:02,017 movies.email Background email worker thread started.
+INFO 2026-06-07 03:14:38,556 movies.email Booking confirmation email sent payment_id=BMS-6C8111F617F5 recipient=m***************@gmail.com
+INFO 2026-06-07 03:23:36,851 movies.email Booking confirmation email sent payment_id=BMS-A581E429860E recipient=m***************@gmail.com
+INFO 2026-06-07 03:40:53,366 movies.email Booking confirmation email sent payment_id=BMS-D09DF2E062C3 recipient=m***************@gmail.com
+INFO 2026-06-07 03:50:24,264 movies.email Booking confirmation email sent payment_id=BMS-EFDE7A30EC70 recipient=m***************@gmail.com
+INFO 2026-06-07 03:53:42,511 movies.email Booking confirmation email sent payment_id=BMS-97B69F2C2AB4 recipient=m***************@gmail.com
+INFO 2026-06-07 04:05:53,200 movies.email Booking confirmation email sent payment_id=BMS-CF595EFFD77C recipient=m***************@gmail.com
+INFO 2026-06-07 04:13:23,978 movies.email Booking confirmation email sent payment_id=BMS-640110774247 recipient=m***************@gmail.com
+INFO 2026-06-07 22:36:03,773 movies.email Background email worker thread started.
+INFO 2026-06-07 22:37:06,070 movies.email Booking confirmation email sent payment_id=BMS-5B78A49727F9 recipient=m***************@gmail.com
+INFO 2026-06-07 22:38:41,874 movies.email Booking confirmation email sent payment_id=BMS-97F5C4884685 recipient=m***************@gmail.com
+INFO 2026-06-07 22:46:17,459 movies.email Background email worker thread started.
+INFO 2026-06-07 22:58:10,967 movies.email Background email worker thread started.
+INFO 2026-06-07 23:03:51,807 movies.email Background email worker thread started.
+INFO 2026-06-07 23:04:26,254 movies.email Booking confirmation email sent payment_id=BMS-A5D12BB694DF recipient=m***************@gmail.com
+INFO 2026-06-07 23:11:52,312 movies.email Background email worker thread started.
+INFO 2026-06-07 23:12:23,720 movies.email Booking confirmation email sent payment_id=BMS-A3D2228C36BD recipient=m***************@gmail.com
+INFO 2026-06-07 23:17:15,823 movies.email Booking confirmation email sent payment_id=BMS-FE43AEADC7B3 recipient=m***************@gmail.com
+INFO 2026-06-09 22:14:55,659 movies.email Background email worker thread started.
+INFO 2026-06-09 22:16:55,515 movies.email Background email worker thread started.
+INFO 2026-06-09 22:17:59,650 movies.email Booking confirmation email sent payment_id=BMS-B7A0B81314D0 recipient=m***************@gmail.com
+INFO 2026-06-09 23:06:18,508 movies.email Background email worker thread started.
+INFO 2026-06-09 23:21:53,125 movies.email Background email worker thread started.
+INFO 2026-06-09 23:39:14,407 movies.email Background email worker thread started.
+INFO 2026-06-09 23:43:56,901 movies.email Background email worker thread started.
+INFO 2026-06-09 23:45:52,310 movies.email Background email worker thread started.
+INFO 2026-06-10 00:22:12,452 movies.email Background email worker thread started.
+INFO 2026-06-10 00:32:17,688 movies.email Background email worker thread started.
+INFO 2026-06-10 01:00:35,743 movies.email Background email worker thread started.
+INFO 2026-06-10 01:04:03,686 movies.email Background email worker thread started.
+INFO 2026-06-10 01:10:44,058 movies.email Background email worker thread started.
+INFO 2026-06-10 01:13:26,417 movies.email Background email worker thread started.
+INFO 2026-06-10 01:20:44,630 movies.email Background email worker thread started.
+INFO 2026-06-10 01:21:13,908 movies.email Background email worker thread started.
+INFO 2026-06-10 01:22:06,476 movies.email Background email worker thread started.
+INFO 2026-06-10 19:41:14,406 movies.email Background email worker thread started.
+INFO 2026-06-10 19:51:03,974 movies.email Background email worker thread started.
+INFO 2026-06-10 19:51:46,071 movies.email Background email worker thread started.
+INFO 2026-06-10 19:53:27,734 movies.email Background email worker thread started.
+INFO 2026-06-10 19:57:25,023 movies.email Background email worker thread started.
+INFO 2026-06-10 20:13:46,485 movies.email Background email worker thread started.
+INFO 2026-06-10 20:21:55,884 movies.email Background email worker thread started.
+INFO 2026-06-10 20:41:01,586 movies.email Background email worker thread started.
+INFO 2026-06-10 20:44:24,767 movies.email Background email worker thread started.
+INFO 2026-06-10 20:44:38,860 movies.email Background email worker thread started.
+INFO 2026-06-10 20:44:42,824 movies.email Background email worker thread started.
+INFO 2026-06-10 20:44:53,621 movies.email Background email worker thread started.
+INFO 2026-06-10 20:44:58,793 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:00,566 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:04,537 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:07,340 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:09,130 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:11,867 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:14,641 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:18,563 movies.email Background email worker thread started.
+INFO 2026-06-10 20:45:21,349 movies.email Background email worker thread started.
+INFO 2026-06-10 20:46:00,887 movies.email Background email worker thread started.
+INFO 2026-06-10 20:46:07,256 movies.email Background email worker thread started.
+INFO 2026-06-10 20:46:09,081 movies.email Background email worker thread started.
+INFO 2026-06-10 21:12:44,509 movies.email Background email worker thread started.
+INFO 2026-06-10 21:13:51,964 movies.email Background email worker thread started.
+INFO 2026-06-10 21:14:07,315 movies.email Background email worker thread started.
+INFO 2026-06-10 21:14:58,599 movies.email Background email worker thread started.
+INFO 2026-06-10 21:15:11,099 movies.email Background email worker thread started.
+INFO 2026-06-10 21:15:30,810 movies.email Booking confirmation email sent payment_id=BMS-9563EE77D77B recipient=m***************@gmail.com
+INFO 2026-06-11 00:15:26,663 movies.email Background email worker thread started.
+INFO 2026-06-11 00:49:24,841 movies.email Background email worker thread started.
+INFO 2026-06-11 00:52:42,150 movies.email Background email worker thread started.
+INFO 2026-06-11 00:52:52,030 movies.email Background email worker thread started.
+INFO 2026-06-11 00:52:55,183 movies.email Background email worker thread started.
+INFO 2026-06-11 00:53:03,711 movies.email Background email worker thread started.
+INFO 2026-06-11 00:53:05,893 movies.email Background email worker thread started.
+INFO 2026-06-11 00:53:25,951 movies.email Background email worker thread started.
+INFO 2026-06-11 00:53:32,656 movies.email Background email worker thread started.
+INFO 2026-06-11 00:53:34,669 movies.email Background email worker thread started.
+INFO 2026-06-11 00:53:44,410 movies.email Background email worker thread started.
+INFO 2026-06-11 00:54:05,286 movies.email Background email worker thread started.
+INFO 2026-06-11 00:54:07,329 movies.email Background email worker thread started.
+INFO 2026-06-11 00:54:14,252 movies.email Background email worker thread started.
+INFO 2026-06-11 00:55:22,821 movies.email Background email worker thread started.
+INFO 2026-06-11 00:57:25,932 movies.email Booking confirmation email sent payment_id=BMS-2A67AAA44B56 recipient=m***************@gmail.com
+INFO 2026-06-11 01:17:24,195 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:26,086 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:33,323 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:39,763 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:45,328 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:48,445 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:55,000 movies.email Background email worker thread started.
+INFO 2026-06-11 01:17:58,032 movies.email Background email worker thread started.
+INFO 2026-06-11 01:18:00,969 movies.email Background email worker thread started.
+INFO 2026-06-11 01:18:02,919 movies.email Background email worker thread started.
+INFO 2026-06-11 01:18:04,740 movies.email Background email worker thread started.
+INFO 2026-06-11 01:18:08,104 movies.email Background email worker thread started.
+INFO 2026-06-11 01:19:35,162 movies.email Background email worker thread started.
+INFO 2026-06-11 01:19:37,020 movies.email Background email worker thread started.
+INFO 2026-06-11 01:19:56,996 movies.email Background email worker thread started.
+INFO 2026-06-11 01:20:01,386 movies.email Background email worker thread started.
+INFO 2026-06-11 01:42:12,980 movies.email Background email worker thread started.
+INFO 2026-06-11 01:42:55,009 movies.email Background email worker thread started.
+INFO 2026-06-11 01:44:34,224 movies.email Background email worker thread started.
+INFO 2026-06-11 01:46:22,287 movies.email Background email worker thread started.
+INFO 2026-06-11 01:46:25,271 movies.email Background email worker thread started.
+INFO 2026-06-11 01:48:54,336 movies.email Background email worker thread started.
+INFO 2026-06-11 01:53:22,503 movies.email Background email worker thread started.
+INFO 2026-06-11 01:59:54,254 movies.email Background email worker thread started.
+INFO 2026-06-11 02:00:46,552 movies.email Background email worker thread started.
+INFO 2026-06-11 02:09:04,557 movies.email Background email worker thread started.
+INFO 2026-06-11 02:20:46,305 movies.email Background email worker thread started.
+INFO 2026-06-11 02:22:46,657 movies.email Background email worker thread started.
+INFO 2026-06-11 02:23:31,131 movies.email Background email worker thread started.
+INFO 2026-06-11 02:30:02,280 movies.email Background email worker thread started.
+INFO 2026-06-11 02:34:44,692 movies.email Background email worker thread started.
+INFO 2026-06-11 02:34:46,559 movies.email Background email worker thread started.
+INFO 2026-06-11 02:34:49,602 movies.email Background email worker thread started.
+INFO 2026-06-11 02:34:53,504 movies.email Background email worker thread started.
+INFO 2026-06-11 02:35:06,026 movies.email Background email worker thread started.
+INFO 2026-06-11 02:35:17,022 movies.email Background email worker thread started.
+INFO 2026-06-11 02:35:30,249 movies.email Background email worker thread started.
+INFO 2026-06-11 02:36:24,487 movies.email Booking confirmation email sent payment_id=BMS-89EC783F561A recipient=m***************@gmail.com
+INFO 2026-06-11 02:39:33,265 movies.email Booking confirmation email sent payment_id=BMS-66730892C8CA recipient=m***************@gmail.com
+ERROR 2026-06-11 02:42:08,012 movies.email Booking confirmation email failed payment_id=BMS-98A8D3FE872D recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-11 02:42:08,027 movies.email Booking confirmation email failed payment_id=BMS-339B1F55B1BA recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+INFO 2026-06-11 02:42:08,047 movies.email Booking confirmation email sent payment_id=BMS-C4D28F0430AD recipient=t***************@example.com
+INFO 2026-06-11 02:42:08,059 movies.email Booking confirmation email sent payment_id=BMS-7BF4C7BABD51 recipient=t***************@example.com
+ERROR 2026-06-11 03:01:05,158 movies.email Booking confirmation email failed payment_id=BMS-99DFADB8AB71 recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+ERROR 2026-06-11 03:01:05,158 movies.email Booking confirmation email failed payment_id=BMS-F0BE56E969AF recipient=t***************@example.com retry=0 error='SMTP Connection Failed'
+INFO 2026-06-11 03:01:05,175 movies.email Booking confirmation email sent payment_id=BMS-E775ACBD9DE1 recipient=t***************@example.com
+INFO 2026-06-11 03:01:05,175 movies.email Booking confirmation email sent payment_id=BMS-163918C1B44A recipient=t***************@example.com
+INFO 2026-06-11 03:01:34,427 movies.email Background email worker thread started.
+INFO 2026-06-11 03:03:26,096 movies.email Booking confirmation email sent payment_id=BMS-55C14CAC25E3 recipient=m***************@gmail.com
